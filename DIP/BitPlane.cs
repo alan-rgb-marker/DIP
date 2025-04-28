@@ -57,5 +57,10 @@ namespace DIP
             textBox1.Text = "b" + hScrollBar1.Value.ToString();
             pictureBox1.Image = tmp;
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
