@@ -34,23 +34,14 @@ namespace DIP
 
             for (int i = 0; i < 25; i++)
             {
-                string input = textBoxes[i].Text.Trim();
-                if (input.Contains("/") && input.Split('/').Length == 2)
-                {
-                    var parts = input.Split('/');
-                    if (double.TryParse(parts[0], out double num) && double.TryParse(parts[1], out double den) && den != 0)
-                        KernelValues[i] = num / den;
-                    else
-                        KernelValues[i] = 0;
-                }
-                else if (double.TryParse(input, out double value))
-                {
-                    KernelValues[i] = value;
-                }
-                else
+                if (string.IsNullOrWhiteSpace(textBoxes[i].Text))
                 {
                     textBoxes[i].Text = "0";
                     KernelValues[i] = 0;
+                }
+                else
+                {
+                    KernelValues[i] = Convert.ToDouble(textBoxes[i].Text);
                 }
             }
 
