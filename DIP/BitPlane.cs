@@ -37,6 +37,7 @@ namespace DIP
 
         private void hScrollBar1_ValueChanged(object sender, EventArgs e)
         {
+            int y;
             int[] f;
             int[] g;
             int w = NpBitmap.Width;
