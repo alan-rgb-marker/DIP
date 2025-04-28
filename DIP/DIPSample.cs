@@ -356,7 +356,8 @@ namespace DIP
             childForm.Show();
         }
         //================================================================================================
-        Bitmap tmp;
+        public Bitmap origin;
+        public Bitmap tmp;
         public Bitmap FilterPicture(double[] kernel)
         {
             int[] f;
@@ -370,8 +371,8 @@ namespace DIP
                     Filter(f0, w, h, g0, k0);
                 }
             }
-            NpBitmap = array2bmp(g);
-            return NpBitmap;
+            tmp = array2bmp(g);
+            return tmp;
         }
         private void FilterToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -382,6 +383,7 @@ namespace DIP
                 if (cF.Focused)
                 {
                     filter.pictureBox1.Image = cF.pBitmap;
+                    origin = cF.pBitmap;
                     tmp = cF.pBitmap;
                     break;
                 }

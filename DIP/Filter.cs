@@ -65,7 +65,12 @@ namespace DIP
                 this.DialogResult = DialogResult.OK;
             }
         }
-
+        private void button3_Click(object sender, EventArgs e)
+        {
+            DS.tmp = DS.origin;
+            pictureBox1.Image = DS.tmp;
+            this.DialogResult = DialogResult.None;
+        }
         private void pictureBox1_Click(object sender, EventArgs e)
         {
 
