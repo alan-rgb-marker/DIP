@@ -11,6 +11,7 @@ using System.IO;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 using ScottPlot;
+using static System.Net.WebRequestMethods;
 
 namespace DIP
 {
@@ -31,6 +32,8 @@ namespace DIP
         unsafe public static extern void flip_horizontal(int* f, int w, int h, int* g);
         [DllImport("dip_proc.dll", CallingConvention = CallingConvention.Cdecl)]
         unsafe public static extern void mosaic(int* f, int w, int h, int* g);
+        [DllImport("dip_proc.dll", CallingConvention = CallingConvention.Cdecl)]
+        unsafe public static extern void Filter(int* f, int w, int h, int* g, double* kernel);
 
 
         Bitmap NpBitmap;
@@ -352,5 +355,49 @@ namespace DIP
             childForm.pBitmap = NpBitmap;
             childForm.Show();
         }
+        //================================================================================================
+        Bitmap tmp;
+        public Bitmap FilterPicture(double[] kernel)
+        {
+            int[] f;
+            int[] g;
+            f = bmp2array(tmp);
+            g = new int[w * h];
+            unsafe
+            {
+                fixed (int* f0 = f) fixed (int* g0 = g) fixed (double* k0 = kernel)
+                {
+                    Filter(f0, w, h, g0, k0);
+                }
+            }
+            NpBitmap = array2bmp(g);
+            return NpBitmap;
+        }
+        private void FilterToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Filter filter = new Filter();
+            filter.DS = this;
+            foreach (MSForm cF in MdiChildren)
+            {
+                if (cF.Focused)
+                {
+                    filter.pictureBox1.Image = cF.pBitmap;
+                    tmp = cF.pBitmap;
+                    break;
+                }
+            }
+            if (filter.ShowDialog() == DialogResult.OK)
+            {
+                double[] kernel = filter.KernelValues;
+                Bitmap processedImage = FilterPicture(kernel);
+
+                MSForm childForm = new MSForm();
+                childForm.MdiParent = this;
+                childForm.pf1 = stStripLabel;
+                childForm.pBitmap = processedImage;
+                childForm.Show();
+            }    
+        }
+        //================================================================================================
     }
 }

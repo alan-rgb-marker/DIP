@@ -2,6 +2,7 @@
 
 #include "pch.h"
 #include <string>
+#include <cmath>
 
 extern "C" {
 	//===========================================================================
@@ -132,6 +133,45 @@ extern "C" {
         }
     }
 
+	__declspec(dllexport) void Filter(int* f, int w, int h, int* g, double* kernel){  
+        int x, y, i, j;
+        int kernel_size = 5;
+        int offset = kernel_size / 2;  
+		int dx[25];
+        int dy[25];
 
+        for (i = 0; i < kernel_size; i++) {
+            for (j = 0; j < kernel_size; j++) {
+                dx[i * kernel_size + j] = j - offset;  
+                dy[i * kernel_size + j] = i - offset;  
+            }
+        }
+        for (y = 0; y < h; y++)
+        {
+            for (x = 0; x < w; x++)
+            {
+                double sum = 0.0;
+                for (i = 0; i < 25; i++)
+                {
+                    int xx = x + dx[i];
+                    int yy = y + dy[i];
 
+                    unsigned char pixel = 0; // 預設取不到的地方是 0
+
+                    if (xx >= 0 && xx < w && yy >= 0 && yy < h)
+                    {
+                        pixel = f[yy * w + xx];
+                    }
+
+                    sum += pixel * kernel[i];
+                }
+
+                if (sum < 0.0) sum = 0.0;
+                if (sum > 255.0) sum = 255.0;
+
+                g[y * w + x] = (unsigned char)(sum);
+            }
+        }
+
+    }
 }

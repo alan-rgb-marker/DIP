@@ -42,6 +42,7 @@
             this.HistogramToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.FlipToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mosaicToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.FilterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.oFileDlg = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.statusStrip1.SuspendLayout();
@@ -102,7 +103,8 @@
             this.HistogramEqualizationToolStripMenuItem,
             this.HistogramToolStripMenuItem,
             this.FlipToolStripMenuItem,
-            this.mosaicToolStripMenuItem});
+            this.mosaicToolStripMenuItem,
+            this.FilterToolStripMenuItem});
             this.iPToolStripMenuItem.Name = "iPToolStripMenuItem";
             this.iPToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
             this.iPToolStripMenuItem.Text = "樣式";
@@ -163,6 +165,13 @@
             this.mosaicToolStripMenuItem.Text = "馬賽克";
             this.mosaicToolStripMenuItem.Click += new System.EventHandler(this.mosaicToolStripMenuItem_Click);
             // 
+            // FilterToolStripMenuItem
+            // 
+            this.FilterToolStripMenuItem.Name = "FilterToolStripMenuItem";
+            this.FilterToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.FilterToolStripMenuItem.Text = "濾波器";
+            this.FilterToolStripMenuItem.Click += new System.EventHandler(this.FilterToolStripMenuItem_Click);
+            // 
             // oFileDlg
             // 
             this.oFileDlg.FileName = "openFileDialog1";
@@ -205,5 +214,6 @@
         private System.Windows.Forms.ToolStripMenuItem HistogramToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem FlipToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mosaicToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem FilterToolStripMenuItem;
     }
 }
