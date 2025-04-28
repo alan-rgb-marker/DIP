@@ -139,6 +139,24 @@ extern "C" {
         int offset = kernel_size / 2;  
 		int dx[25];
         int dy[25];
+        //bool hORl = false; //high or low
+        //int low_sum = 0;
+
+        //找到濾波核的所有值總和
+        /*for (size_t i = 0; i < kernel_size * kernel_size; i++)
+        {
+            low_sum += kernel[i];
+        }*/
+
+
+        //判斷高通低通
+        /*for (size_t i = 0; i < kernel_size * kernel_size; i++)
+        {
+            if (kernel[i] < 0) {
+                hORl = true;
+                break;
+            }
+        }*/
 
         for (i = 0; i < kernel_size; i++) {
             for (j = 0; j < kernel_size; j++) {
@@ -146,6 +164,8 @@ extern "C" {
                 dy[i * kernel_size + j] = i - offset;  
             }
         }
+
+
         for (y = 0; y < h; y++)
         {
             for (x = 0; x < w; x++)
@@ -162,8 +182,15 @@ extern "C" {
                     {
                         pixel = f[yy * w + xx];
                     }
-
-                    sum += pixel * kernel[i];
+                    
+                    /*if (hORl == true)
+                    {
+                        sum += pixel * kernel[i];
+                    }
+                    else
+                    {
+                        sum += pixel * kernel[i] / low_sum;
+                    }*/
                 }
 
                 if (sum < 0.0) sum = 0.0;
