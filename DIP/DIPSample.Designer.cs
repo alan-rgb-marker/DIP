@@ -45,6 +45,7 @@
             this.FilterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.oFileDlg = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.OtsuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -104,7 +105,8 @@
             this.HistogramToolStripMenuItem,
             this.FlipToolStripMenuItem,
             this.mosaicToolStripMenuItem,
-            this.FilterToolStripMenuItem});
+            this.FilterToolStripMenuItem,
+            this.OtsuToolStripMenuItem});
             this.iPToolStripMenuItem.Name = "iPToolStripMenuItem";
             this.iPToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
             this.iPToolStripMenuItem.Text = "樣式";
@@ -176,6 +178,13 @@
             // 
             this.oFileDlg.FileName = "openFileDialog1";
             // 
+            // OtsuToolStripMenuItem
+            // 
+            this.OtsuToolStripMenuItem.Name = "OtsuToolStripMenuItem";
+            this.OtsuToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.OtsuToolStripMenuItem.Text = "二值化";
+            this.OtsuToolStripMenuItem.Click += new System.EventHandler(this.OtsuToolStripMenuItem_Click);
+            // 
             // DIPSample
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -215,5 +224,6 @@
         private System.Windows.Forms.ToolStripMenuItem FlipToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mosaicToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem FilterToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem OtsuToolStripMenuItem;
     }
 }

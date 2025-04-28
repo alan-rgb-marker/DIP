@@ -172,6 +172,80 @@ extern "C" {
                 g[y * w + x] = (unsigned char)(sum);
             }
         }
-
     }
+    __declspec(dllexport)void Otsu(int* f, int w, int h, int* g, int histSize) {
+        int total = w * h;  //像素數
+        int* hist = (int*)malloc(sizeof(int) * histSize);  //直方圖
+        double* prob = (double*)malloc(sizeof(double) * histSize); //機率
+        double* levels = (double*)malloc(sizeof(double) * histSize);  //灰階
+
+        // 初始化
+        for (int i = 0; i < histSize; ++i) {
+            hist[i] = 0;
+        }
+
+        // 計算直方圖
+        for (int i = 0; i < total; ++i) {
+            int val = f[i];
+            int bin = val * histSize / 256;
+            if (bin >= histSize) bin = histSize - 1;
+            hist[bin]++;
+        }
+
+        // 計算機率 + 建立灰階表
+        for (int i = 0; i < histSize; ++i) {
+            prob[i] = (double)hist[i] / total;
+            levels[i] = i * (256.0 / histSize);
+        }
+
+        // Otsu找最佳Threshold
+        //double between_var = w0 * w1 * (mu0 - mu1) * (mu0 - mu1); 核心公式
+        // w0 背景權重 mu0背景均值
+        // w1 前景權重 mu1 前景均值
+        // 當前灰階級別機率為背景 ex 看prob[0] 那灰階級別 0 當背景 其他為前景
+        //找出最大值 就是最佳閥值
+        double max_between_var = 0.0;
+        int best_thresh_bin = 0;
+
+        for (int t = 1; t < histSize; ++t) {
+            double w0 = 0.0, mu0 = 0.0;
+            for (int i = 0; i < t; ++i) {
+                w0 += prob[i];
+                mu0 += levels[i] * prob[i];
+            }
+            if (w0 == 0.0) continue;
+            mu0 /= w0;
+
+            double w1 = 1.0 - w0;
+            if (w1 == 0.0) continue;
+
+            double mu1 = 0.0;
+            for (int i = t; i < histSize; ++i) {
+                mu1 += levels[i] * prob[i];
+            }
+            mu1 /= w1;
+
+            double between_var = w0 * w1 * (mu0 - mu1) * (mu0 - mu1);
+            if (between_var > max_between_var) {
+                max_between_var = between_var;
+                best_thresh_bin = t;
+            }
+        }
+
+        // 計算實際灰階門檻
+        int threshold = best_thresh_bin * 256 / histSize;
+        if (threshold > 255) threshold = 255;
+
+        // 二值化處理
+        for (int i = 0; i < total; ++i) {
+            int val = f[i];
+            g[i] = (val >= threshold) ? 255 : 0;
+        }
+
+        // 釋放記憶體
+        free(hist);
+        free(prob);
+        free(levels);
+    }
+
 }

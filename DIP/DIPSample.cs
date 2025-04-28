@@ -34,6 +34,8 @@ namespace DIP
         unsafe public static extern void mosaic(int* f, int w, int h, int* g);
         [DllImport("dip_proc.dll", CallingConvention = CallingConvention.Cdecl)]
         unsafe public static extern void Filter(int* f, int w, int h, int* g, double* kernel);
+        [DllImport("dip_proc.dll", CallingConvention = CallingConvention.Cdecl)]
+        unsafe public static extern void Otsu(int* f, int w, int h, int* g, int histSize);
 
 
         Bitmap NpBitmap;
@@ -401,5 +403,32 @@ namespace DIP
             }    
         }
         //================================================================================================
+        private void OtsuToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int[] f;
+            int[] g;
+            foreach (MSForm cF in MdiChildren)
+            {
+                if (cF.Focused)
+                {
+                    f = bmp2array(cF.pBitmap);
+                    g = new int[w * h];
+                    unsafe
+                    {
+                        fixed (int* f0 = f) fixed (int* g0 = g)
+                        {
+                            Otsu(f0, w, h, g0, 256);
+                        }
+                    }
+                    NpBitmap = array2bmp(g);
+                    break;
+                }
+            }
+            MSForm childForm = new MSForm();
+            childForm.MdiParent = this;
+            childForm.pf1 = stStripLabel;
+            childForm.pBitmap = NpBitmap;
+            childForm.Show();
+        }
     }
 }
