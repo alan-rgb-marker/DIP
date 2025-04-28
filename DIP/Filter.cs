@@ -46,7 +46,6 @@ namespace DIP
             }
 
             pictureBox1.Image = DS.FilterPicture(KernelValues);
-
             this.DialogResult = DialogResult.None;
         }
 
