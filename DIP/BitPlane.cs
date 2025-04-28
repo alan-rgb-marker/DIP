@@ -28,6 +28,7 @@ namespace DIP
             pictureBox1.Image = tmp;
         }
 
+
         [DllImport("dip_proc.dll", CallingConvention = CallingConvention.Cdecl)]
         unsafe public static extern void bitplane(int* f, int w, int h, int* g, int n);
 
@@ -38,6 +39,7 @@ namespace DIP
         private void hScrollBar1_ValueChanged(object sender, EventArgs e)
         {
             int y;
+            int x;
             int[] f;
             int[] g;
             int w = NpBitmap.Width;
