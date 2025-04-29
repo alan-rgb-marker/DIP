@@ -133,42 +133,92 @@ extern "C" {
         }
     }
 
-	__declspec(dllexport) void Filter(int* f, int w, int h, int* g, double* kernel){  
-        int x, y, i, j;
-        int kernel_size = 5;
-        int offset = kernel_size / 2;  
-		int dx[25];
-        int dy[25];
+	//__declspec(dllexport) void Filter(int* f, int w, int h, int* g, double* kernel){  
+ //       int x, y, i, j;
+ //       int kernel_size = 5;
+ //       int offset = kernel_size / 2;  
+	//	int dx[25];
+ //       int dy[25];
 
-        for (i = 0; i < kernel_size; i++) {
-            for (j = 0; j < kernel_size; j++) {
-                dx[i * kernel_size + j] = j - offset;  
-                dy[i * kernel_size + j] = i - offset;  
+ //       for (i = 0; i < kernel_size; i++) {
+ //           for (j = 0; j < kernel_size; j++) {
+ //               dx[i * kernel_size + j] = j - offset;  
+ //               dy[i * kernel_size + j] = i - offset;  
+ //           }
+ //       }
+ //       for (y = 0; y < h; y++)
+ //       {
+ //           for (x = 0; x < w; x++)
+ //           {
+ //               double sum = 0.0;
+ //               for (i = 0; i < 25; i++)
+ //               {
+ //                   int xx = x + dx[i];
+ //                   int yy = y + dy[i];
+
+ //                   unsigned char pixel = 0; // 預設取不到的地方是 0
+
+ //                   if (xx >= 0 && xx < w && yy >= 0 && yy < h)
+ //                   {
+ //                       pixel = f[yy * w + xx];
+ //                   }
+
+ //                   sum += pixel * kernel[i];
+ //               }
+
+ //               if (sum < 0.0) sum = 0.0;
+ //               if (sum > 255.0) sum = 255.0;
+
+ //               g[y * w + x] = (unsigned char)(sum);
+ //           }
+ //       }
+ //   }
+    __declspec(dllexport) void Filter(int* f, int w, int h, int* g, double* kernel, double sigma) {
+        int kernel_size = 5;
+        int offset = kernel_size / 2;
+        int dx[25], dy[25];
+        double gaussian_kernel[25]; // 若 sigma > 0 時使用這個
+        // 建立 dx, dy 位移表
+        for (int i = 0; i < kernel_size; i++) {
+            for (int j = 0; j < kernel_size; j++) {
+                dx[i * kernel_size + j] = j - offset;
+                dy[i * kernel_size + j] = i - offset;
             }
         }
-        for (y = 0; y < h; y++)
-        {
-            for (x = 0; x < w; x++)
-            {
+        // 如果 sigma > 0，產生高斯 kernel
+        if (sigma > 0.0) {
+            double sum = 0.0;
+            for (int i = 0; i < kernel_size; i++) {
+                for (int j = 0; j < kernel_size; j++) {
+                    int x = j - offset;
+                    int y = i - offset;
+                    double value = std::exp(-(x * x + y * y) / (2 * sigma * sigma));
+                    gaussian_kernel[i * kernel_size + j] = value;
+                    sum += value;
+                }
+            }
+            // 正規化
+            for (int i = 0; i < 25; i++) {
+                gaussian_kernel[i] /= sum;
+            }
+        }
+        for (int y = 0; y < h; y++) {
+            for (int x = 0; x < w; x++) {
                 double sum = 0.0;
-                for (i = 0; i < 25; i++)
-                {
+                for (int i = 0; i < 25; i++) {
                     int xx = x + dx[i];
                     int yy = y + dy[i];
 
-                    unsigned char pixel = 0; // 預設取不到的地方是 0
-
-                    if (xx >= 0 && xx < w && yy >= 0 && yy < h)
-                    {
+                    unsigned char pixel = 0;
+                    if (xx >= 0 && xx < w && yy >= 0 && yy < h) {
                         pixel = f[yy * w + xx];
                     }
 
-                    sum += pixel * kernel[i];
+                    double k = (sigma > 0.0) ? gaussian_kernel[i] : kernel[i];
+                    sum += pixel * k;
                 }
-
                 if (sum < 0.0) sum = 0.0;
                 if (sum > 255.0) sum = 255.0;
-
                 g[y * w + x] = (unsigned char)(sum);
             }
         }

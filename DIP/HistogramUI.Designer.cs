@@ -34,21 +34,25 @@
             // formsPlot1
             // 
             this.formsPlot1.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.formsPlot1.AutoSize = true;
+            this.formsPlot1.CausesValidation = false;
             this.formsPlot1.Location = new System.Drawing.Point(0, 1);
-            this.formsPlot1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.formsPlot1.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.formsPlot1.Name = "formsPlot1";
-            this.formsPlot1.Size = new System.Drawing.Size(801, 449);
+            this.formsPlot1.Size = new System.Drawing.Size(802, 449);
             this.formsPlot1.TabIndex = 0;
             // 
             // HistogramUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(800, 451);
             this.Controls.Add(this.formsPlot1);
+            this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.Name = "HistogramUI";
             this.Text = "HistogramUI";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 

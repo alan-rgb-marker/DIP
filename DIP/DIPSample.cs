@@ -33,7 +33,7 @@ namespace DIP
         [DllImport("dip_proc.dll", CallingConvention = CallingConvention.Cdecl)]
         unsafe public static extern void mosaic(int* f, int w, int h, int* g);
         [DllImport("dip_proc.dll", CallingConvention = CallingConvention.Cdecl)]
-        unsafe public static extern void Filter(int* f, int w, int h, int* g, double* kernel);
+        unsafe public static extern void Filter(int* f, int w, int h, int* g, double* kernel, double sigma);
         [DllImport("dip_proc.dll", CallingConvention = CallingConvention.Cdecl)]
         unsafe public static extern void Otsu(int* f, int w, int h, int* g, int histSize);
 
@@ -246,6 +246,7 @@ namespace DIP
                 }
             }
             HistogramUI plt = new HistogramUI();
+            plt.MdiParent = this;
             // 3. 準備X軸 (0,1,2,...,255)
             double[] bins = Enumerable.Range(0, 256).Select(x => (double)x).ToArray();
             // 4. 畫圖
@@ -289,6 +290,7 @@ namespace DIP
             if (g != null) // Ensure 'g' is not null before proceeding  
             {
                 HistogramUI plt = new HistogramUI();
+                plt.MdiParent = this;
                 //double[] g1 = new double[w*h]; // Adjusted size to match bins
 
                 int[] counts = new int[256];
@@ -360,7 +362,7 @@ namespace DIP
         //================================================================================================
         public Bitmap origin;
         public Bitmap tmp;
-        public Bitmap FilterPicture(double[] kernel)
+        public Bitmap FilterPicture(double[] kernel,double sigma)
         {
             int[] f;
             int[] g;
@@ -370,7 +372,7 @@ namespace DIP
             {
                 fixed (int* f0 = f) fixed (int* g0 = g) fixed (double* k0 = kernel)
                 {
-                    Filter(f0, w, h, g0, k0);
+                    Filter(f0, w, h, g0, k0, sigma);
                 }
             }
             tmp = array2bmp(g);
@@ -393,7 +395,7 @@ namespace DIP
             if (filter.ShowDialog() == DialogResult.OK)
             {
                 double[] kernel = filter.KernelValues;
-                Bitmap processedImage = FilterPicture(kernel);
+                Bitmap processedImage = tmp;
 
                 MSForm childForm = new MSForm();
                 childForm.MdiParent = this;
