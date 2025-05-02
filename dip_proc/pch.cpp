@@ -3,6 +3,7 @@
 #include "pch.h"
 #include <string>
 #include <cmath>
+#include <numbers>
 
 extern "C" {
 	//===========================================================================
@@ -222,6 +223,36 @@ extern "C" {
                 g[y * w + x] = (unsigned char)(sum);
             }
         }
+    }
+
+    __declspec(dllexport) void rotations(int* f, int w, int h, int nw, int nh, int* g, int theta) {
+
+        double theta_rad = theta * std::numbers::pi / 180;
+        int hs = w / 2;
+        int ks = h / 2;
+
+        for (int i = 0; i < nw * nh; i++)
+        {
+            g[i] = 0;
+        }
+        double no[3][3] = {
+            {cos(theta_rad), -sin(theta_rad), -hs * cos(theta_rad) + ks * sin(theta_rad) + nw / 2},
+            {sin(theta_rad), cos(theta_rad), -hs * sin(theta_rad) - ks * cos(theta_rad) + nh / 2},
+            {0, 0, 1},
+        };
+
+        int M[3] = { 0 };
+
+        for (int i = 0; i < h; i++) {
+            for (int j = 0; j < w; j++) {
+                for (int x = 0; x < 3; x++) {
+                    M[x] = no[x][0] * j + no[x][1] * i + no[x][2];
+                }
+                //g[M[1] + hs / 2 * nw + (M[0] + ks / 2)] = f[i * w + j];
+                g[M[1] * nw + M[0]] = f[i * w + j];
+            }
+        }
+
     }
     __declspec(dllexport)void Otsu(int* f, int w, int h, int* g, int histSize) {
         int total = w * h;  //像素數

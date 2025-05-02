@@ -43,9 +43,10 @@
             this.FlipToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mosaicToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.FilterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.OtsuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.oFileDlg = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.OtsuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.RotationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -99,13 +100,14 @@
             this.iPToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.rGBtoGrayToolStripMenuItem,
             this.NegativeToolStripMenuItem,
+            this.mosaicToolStripMenuItem,
             this.ContrastANDBrightnessToolStripMenuItem,
             this.BitPlaneToolStripMenuItem,
             this.HistogramEqualizationToolStripMenuItem,
             this.HistogramToolStripMenuItem,
             this.FlipToolStripMenuItem,
-            this.mosaicToolStripMenuItem,
             this.FilterToolStripMenuItem,
+            this.RotationToolStripMenuItem,
             this.OtsuToolStripMenuItem});
             this.iPToolStripMenuItem.Name = "iPToolStripMenuItem";
             this.iPToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
@@ -174,16 +176,23 @@
             this.FilterToolStripMenuItem.Text = "濾波器";
             this.FilterToolStripMenuItem.Click += new System.EventHandler(this.FilterToolStripMenuItem_Click);
             // 
-            // oFileDlg
-            // 
-            this.oFileDlg.FileName = "openFileDialog1";
-            // 
             // OtsuToolStripMenuItem
             // 
             this.OtsuToolStripMenuItem.Name = "OtsuToolStripMenuItem";
             this.OtsuToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.OtsuToolStripMenuItem.Text = "二值化";
             this.OtsuToolStripMenuItem.Click += new System.EventHandler(this.OtsuToolStripMenuItem_Click);
+            // 
+            // oFileDlg
+            // 
+            this.oFileDlg.FileName = "openFileDialog1";
+            // 
+            // RotationToolStripMenuItem
+            // 
+            this.RotationToolStripMenuItem.Name = "RotationToolStripMenuItem";
+            this.RotationToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.RotationToolStripMenuItem.Text = "旋轉";
+            this.RotationToolStripMenuItem.Click += new System.EventHandler(this.RotationToolStripMenuItem_Click);
             // 
             // DIPSample
             // 
@@ -225,5 +234,6 @@
         private System.Windows.Forms.ToolStripMenuItem mosaicToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem FilterToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem OtsuToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem RotationToolStripMenuItem;
     }
 }

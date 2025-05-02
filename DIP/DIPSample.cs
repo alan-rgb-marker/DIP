@@ -404,7 +404,19 @@ namespace DIP
                 childForm.Show();
             }    
         }
-        //================================================================================================
+
+        private void RotationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach (MSForm cF in MdiChildren)
+            {
+                if (cF.Focused)
+                {
+                    Rotation rotation = new Rotation(cF.pBitmap, this);
+                    rotation.Show();
+                }
+            }
+        }
+
         private void OtsuToolStripMenuItem_Click(object sender, EventArgs e)
         {
             int[] f;
