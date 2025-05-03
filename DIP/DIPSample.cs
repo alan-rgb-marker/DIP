@@ -204,11 +204,10 @@ namespace DIP
 
         public void set_Bitmap(Bitmap b)
         {
-            NpBitmap = b;
             MSForm childForm = new MSForm();
             childForm.MdiParent = this;
             childForm.pf1 = stStripLabel;
-            childForm.pBitmap = NpBitmap;
+            childForm.pBitmap = b;
             childForm.Show();
         }
 

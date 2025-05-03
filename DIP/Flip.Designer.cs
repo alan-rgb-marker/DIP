@@ -32,6 +32,7 @@
             this.button1 = new System.Windows.Forms.Button();
             this.rotate_clockwise_90 = new System.Windows.Forms.Button();
             this.rotate_counter_clockwise_90 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -49,7 +50,7 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("新細明體", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.button1.Location = new System.Drawing.Point(131, 472);
+            this.button1.Location = new System.Drawing.Point(134, 416);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(177, 39);
             this.button1.TabIndex = 2;
@@ -79,11 +80,23 @@
             this.rotate_counter_clockwise_90.UseVisualStyleBackColor = true;
             this.rotate_counter_clockwise_90.Click += new System.EventHandler(this.rotate_counter_clockwise_90_Click);
             // 
+            // button2
+            // 
+            this.button2.Font = new System.Drawing.Font("新細明體", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.button2.Location = new System.Drawing.Point(134, 489);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(177, 39);
+            this.button2.TabIndex = 5;
+            this.button2.Text = "確定";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // Flip
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(460, 572);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.rotate_counter_clockwise_90);
             this.Controls.Add(this.rotate_clockwise_90);
             this.Controls.Add(this.button1);
@@ -101,5 +114,6 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button rotate_clockwise_90;
         private System.Windows.Forms.Button rotate_counter_clockwise_90;
+        private System.Windows.Forms.Button button2;
     }
 }

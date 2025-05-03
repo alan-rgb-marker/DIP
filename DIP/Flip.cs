@@ -91,6 +91,11 @@ namespace DIP
             pictureBox1.Image = tmp;
         }
 
+        private void button2_Click(object sender, EventArgs e)
+        {
+            dIP.set_Bitmap(pictureBox1.Image as Bitmap);
+            this.Close();
+        }
         
     }
 }

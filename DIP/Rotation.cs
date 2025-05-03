@@ -63,7 +63,8 @@ namespace DIP
 
         private void button1_Click(object sender, EventArgs e)
         {
-
+            sample.set_Bitmap(pictureBox1.Image as Bitmap);
+            this.Close();
         }
     }
 }
