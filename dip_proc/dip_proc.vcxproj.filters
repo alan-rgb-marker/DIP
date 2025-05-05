@@ -30,18 +30,4 @@
       <Filter>來源檔案</Filter>
     </ClCompile>
   </ItemGroup>
-  <ItemGroup>
-    <Image Include="..\..\..\第1週\Standard Images(2)\Standard Images\ISample02\Lena256.bmp">
-      <Filter>資源檔</Filter>
-    </Image>
-    <Image Include="..\..\..\第1週\Standard Images(2)\Standard Images\ISample02\B11253610.bmp">
-      <Filter>資源檔</Filter>
-    </Image>
-    <Image Include="..\..\..\第1週\Standard Images(2)\Standard Images\ISample02\Lena256_24bits.bmp">
-      <Filter>資源檔</Filter>
-    </Image>
-    <Image Include="..\..\..\第1週\Standard Images(2)\Standard Images\ISample02\RGB_iris.bmp">
-      <Filter>資源檔</Filter>
-    </Image>
-  </ItemGroup>
 </Project>
