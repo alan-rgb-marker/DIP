@@ -328,5 +328,70 @@ extern "C" {
         free(prob);
         free(levels);
     }
+    //放大
+    __declspec(dllexport) void scale_up_bilinear(int* f, int w, int h, int* g, int new_w, int new_h, double scale_factor) {
+        if (scale_factor <= 1.0) return; 
 
+        new_w = static_cast<int>(w * scale_factor);
+        new_h = static_cast<int>(h * scale_factor);
+
+        double scale_x = static_cast<double>(w) / new_w;
+        double scale_y = static_cast<double>(h) / new_h;
+
+        for (int y = 0; y < new_h; y++) {
+            for (int x = 0; x < new_w; x++) {
+                double src_x = x * scale_x;
+                double src_y = y * scale_y;
+
+                int x0 = static_cast<int>(src_x);
+                int y0 = static_cast<int>(src_y);
+                int x1 = min(x0 + 1, w - 1);
+                int y1 = min(y0 + 1, h - 1);
+
+                double dx = src_x - x0;
+                double dy = src_y - y0;
+
+                int p00 = f[y0 * w + x0];
+                int p10 = f[y0 * w + x1];
+                int p01 = f[y1 * w + x0];
+                int p11 = f[y1 * w + x1];
+
+                double top = p00 * (1 - dx) + p10 * dx;
+                double bottom = p01 * (1 - dx) + p11 * dx;
+                double value = top * (1 - dy) + bottom * dy;
+
+                g[y * (new_w) + x] = static_cast<int>(value + 0.5);
+            }
+        }
+    }
+    //縮小
+    __declspec(dllexport) void scale_down_bilinear(int* f, int w, int h, int* g, int new_w, int new_h, double shink_factor) {
+        double scale_x = (double)w / new_w;
+        double scale_y = (double)h / new_h;
+
+        for (int y = 0; y < new_h; y++) {
+            for (int x = 0; x < new_w; x++) {
+                double src_x = x * scale_x;
+                double src_y = y * scale_y;
+
+                int x0 = (int)src_x;
+                int y0 = (int)src_y;
+                int x1 = min(x0 + 1, w - 1);
+                int y1 = min(y0 + 1, h - 1);
+
+                double dx = src_x - x0;
+                double dy = src_y - y0;
+
+                int p00 = f[y0 * w + x0];
+                int p10 = f[y0 * w + x1];
+                int p01 = f[y1 * w + x0];
+                int p11 = f[y1 * w + x1];
+
+                double top = p00 * (1 - dx) + p10 * dx;
+                double bottom = p01 * (1 - dx) + p11 * dx;
+                double value = top * (1 - dy) + bottom * dy;
+                g[y * new_w + x] = (int)(value + 0.5);
+            }
+        }
+    }
 }

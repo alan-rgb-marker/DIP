@@ -36,17 +36,18 @@
             this.iPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rGBtoGrayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.NegativeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mosaicToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ContrastANDBrightnessToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.BitPlaneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.HistogramEqualizationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.HistogramToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.FlipToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mosaicToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.FilterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.RotationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.OtsuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.oFileDlg = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.RotationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.zoomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -91,7 +92,7 @@
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.openToolStripMenuItem.Text = "&Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
@@ -108,7 +109,8 @@
             this.FlipToolStripMenuItem,
             this.FilterToolStripMenuItem,
             this.RotationToolStripMenuItem,
-            this.OtsuToolStripMenuItem});
+            this.OtsuToolStripMenuItem,
+            this.zoomToolStripMenuItem});
             this.iPToolStripMenuItem.Name = "iPToolStripMenuItem";
             this.iPToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
             this.iPToolStripMenuItem.Text = "樣式";
@@ -126,6 +128,13 @@
             this.NegativeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.NegativeToolStripMenuItem.Text = "負片";
             this.NegativeToolStripMenuItem.Click += new System.EventHandler(this.NegativeToolStripMenuItem_Click);
+            // 
+            // mosaicToolStripMenuItem
+            // 
+            this.mosaicToolStripMenuItem.Name = "mosaicToolStripMenuItem";
+            this.mosaicToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.mosaicToolStripMenuItem.Text = "馬賽克";
+            this.mosaicToolStripMenuItem.Click += new System.EventHandler(this.mosaicToolStripMenuItem_Click);
             // 
             // ContrastANDBrightnessToolStripMenuItem
             // 
@@ -162,19 +171,19 @@
             this.FlipToolStripMenuItem.Text = "翻轉";
             this.FlipToolStripMenuItem.Click += new System.EventHandler(this.FlipToolStripMenuItem_Click);
             // 
-            // mosaicToolStripMenuItem
-            // 
-            this.mosaicToolStripMenuItem.Name = "mosaicToolStripMenuItem";
-            this.mosaicToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.mosaicToolStripMenuItem.Text = "馬賽克";
-            this.mosaicToolStripMenuItem.Click += new System.EventHandler(this.mosaicToolStripMenuItem_Click);
-            // 
             // FilterToolStripMenuItem
             // 
             this.FilterToolStripMenuItem.Name = "FilterToolStripMenuItem";
             this.FilterToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.FilterToolStripMenuItem.Text = "濾波器";
             this.FilterToolStripMenuItem.Click += new System.EventHandler(this.FilterToolStripMenuItem_Click);
+            // 
+            // RotationToolStripMenuItem
+            // 
+            this.RotationToolStripMenuItem.Name = "RotationToolStripMenuItem";
+            this.RotationToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.RotationToolStripMenuItem.Text = "旋轉";
+            this.RotationToolStripMenuItem.Click += new System.EventHandler(this.RotationToolStripMenuItem_Click);
             // 
             // OtsuToolStripMenuItem
             // 
@@ -187,12 +196,12 @@
             // 
             this.oFileDlg.FileName = "openFileDialog1";
             // 
-            // RotationToolStripMenuItem
+            // zoomToolStripMenuItem
             // 
-            this.RotationToolStripMenuItem.Name = "RotationToolStripMenuItem";
-            this.RotationToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.RotationToolStripMenuItem.Text = "旋轉";
-            this.RotationToolStripMenuItem.Click += new System.EventHandler(this.RotationToolStripMenuItem_Click);
+            this.zoomToolStripMenuItem.Name = "zoomToolStripMenuItem";
+            this.zoomToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.zoomToolStripMenuItem.Text = "縮放";
+            this.zoomToolStripMenuItem.Click += new System.EventHandler(this.zoomToolStripMenuItem_Click);
             // 
             // DIPSample
             // 
@@ -235,5 +244,6 @@
         private System.Windows.Forms.ToolStripMenuItem FilterToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem OtsuToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem RotationToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem zoomToolStripMenuItem;
     }
 }

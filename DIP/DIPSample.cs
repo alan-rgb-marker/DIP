@@ -36,6 +36,7 @@ namespace DIP
         unsafe public static extern void Filter(int* f, int w, int h, int* g, double* kernel, double sigma);
         [DllImport("dip_proc.dll", CallingConvention = CallingConvention.Cdecl)]
         unsafe public static extern void Otsu(int* f, int w, int h, int* g, int histSize);
+        
 
 
         Bitmap NpBitmap;
@@ -412,6 +413,18 @@ namespace DIP
                 {
                     Rotation rotation = new Rotation(cF.pBitmap, this);
                     rotation.Show();
+                }
+            }
+        }
+
+        private void zoomToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach (MSForm cF in MdiChildren)
+            {
+                if (cF.Focused)
+                {
+                    Zoom zoom = new Zoom(cF.pBitmap, this);
+                    zoom.Show();
                 }
             }
         }

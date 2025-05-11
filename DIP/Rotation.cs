@@ -66,5 +66,10 @@ namespace DIP
             sample.set_Bitmap(pictureBox1.Image as Bitmap);
             this.Close();
         }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
