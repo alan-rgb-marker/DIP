@@ -47,7 +47,7 @@
             this.OtsuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.oFileDlg = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.zoomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ConnectedComponentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -109,8 +109,7 @@
             this.FlipToolStripMenuItem,
             this.FilterToolStripMenuItem,
             this.RotationToolStripMenuItem,
-            this.OtsuToolStripMenuItem,
-            this.zoomToolStripMenuItem});
+            this.OtsuToolStripMenuItem});
             this.iPToolStripMenuItem.Name = "iPToolStripMenuItem";
             this.iPToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
             this.iPToolStripMenuItem.Text = "樣式";
@@ -196,12 +195,12 @@
             // 
             this.oFileDlg.FileName = "openFileDialog1";
             // 
-            // zoomToolStripMenuItem
+            // RotationToolStripMenuItem
             // 
-            this.zoomToolStripMenuItem.Name = "zoomToolStripMenuItem";
-            this.zoomToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.zoomToolStripMenuItem.Text = "縮放";
-            this.zoomToolStripMenuItem.Click += new System.EventHandler(this.zoomToolStripMenuItem_Click);
+            this.RotationToolStripMenuItem.Name = "RotationToolStripMenuItem";
+            this.RotationToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.RotationToolStripMenuItem.Text = "旋轉";
+            this.RotationToolStripMenuItem.Click += new System.EventHandler(this.RotationToolStripMenuItem_Click);
             // 
             // DIPSample
             // 
@@ -244,6 +243,5 @@
         private System.Windows.Forms.ToolStripMenuItem FilterToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem OtsuToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem RotationToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem zoomToolStripMenuItem;
     }
 }
