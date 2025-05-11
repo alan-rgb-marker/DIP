@@ -4,6 +4,7 @@
 #include <string>
 #include <cmath>
 #include <numbers>
+#include <vector>
 
 extern "C" {
 	//===========================================================================
@@ -327,6 +328,42 @@ extern "C" {
         free(hist);
         free(prob);
         free(levels);
+    }
+
+    __declspec(dllexport) void connected_component(int* f, int w, int h, int* g) {
+        // 初始化標記陣列
+        int label = 0;
+        int* labels = new int[w * h];
+        for (int i = 0; i < w * h; i++) {
+            labels[i] = -1; // -1 表示未標記
+        }
+        // 進行連通區域標記
+        for (int y = 0; y < h; y++) {
+            for (int x = 0; x < w; x++) {
+                if (f[y * w + x] > 0 && labels[y * w + x] == -1) { // 如果是前景且未標記
+                    label++;
+                    std::vector<std::pair<int, int>> stack;
+                    stack.push_back({ x, y });
+                    while (!stack.empty()) {
+                        auto [cx, cy] = stack.back();
+                        stack.pop_back();
+                        if (cx < 0 || cx >= w || cy < 0 || cy >= h) continue; // 邊界檢查
+                        if (f[cy * w + cx] == 0 || labels[cy * w + cx] != -1) continue; // 背景或已標記
+                        labels[cy * w + cx] = label;
+                        // 將相鄰像素加入堆疊
+                        stack.push_back({ cx + 1, cy });
+                        stack.push_back({ cx - 1, cy });
+                        stack.push_back({ cx, cy + 1 });
+                        stack.push_back({ cx, cy - 1 });
+                    }
+                }
+            }
+        }
+        // 將標記結果寫入輸出影像
+        for (int i = 0; i < w * h; i++) {
+            g[i] = labels[i];
+        }
+        delete[] labels;
     }
 
 }
