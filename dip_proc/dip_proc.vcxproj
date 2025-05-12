@@ -175,6 +175,12 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\第1週\Standard Images(2)\Standard Images\ISample02\B11253610.bmp" />
+    <Image Include="..\..\..\第1週\Standard Images(2)\Standard Images\ISample02\Lena256.bmp" />
+    <Image Include="..\..\..\第1週\Standard Images(2)\Standard Images\ISample02\Lena256_24bits.bmp" />
+    <Image Include="..\..\..\第1週\Standard Images(2)\Standard Images\ISample02\RGB_iris.bmp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
