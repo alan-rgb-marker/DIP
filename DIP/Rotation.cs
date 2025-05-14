@@ -71,5 +71,10 @@ namespace DIP
         {
 
         }
+
+        private void hScrollBar1_Scroll(object sender, ScrollEventArgs e)
+        {
+
+        }
     }
 }
