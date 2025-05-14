@@ -63,6 +63,7 @@ namespace DIP
             int[] f = new int[w * h];  // 原始影像的像素陣列
             double scaleFactor = double.Parse(textBox1.Text);  // 從 TextBox 控制項獲取放大倍數
 
+
             // 將影像轉換為灰階像素陣列 f
             for (int y = 0; y < h; y++)
             {

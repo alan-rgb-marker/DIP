@@ -1,4 +1,6 @@
-﻿namespace DIP
+﻿using System.Windows.Forms;
+
+namespace DIP
 {
     partial class DIPSample
     {
@@ -47,7 +49,8 @@
             this.OtsuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.oFileDlg = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.ConnectedComponentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ConComToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.zoomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -92,7 +95,7 @@
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
             this.openToolStripMenuItem.Text = "&Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
@@ -109,7 +112,9 @@
             this.FlipToolStripMenuItem,
             this.FilterToolStripMenuItem,
             this.RotationToolStripMenuItem,
-            this.OtsuToolStripMenuItem});
+            this.OtsuToolStripMenuItem,
+            this.ConComToolStripMenuItem,
+            this.zoomToolStripMenuItem});
             this.iPToolStripMenuItem.Name = "iPToolStripMenuItem";
             this.iPToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
             this.iPToolStripMenuItem.Text = "樣式";
@@ -195,12 +200,19 @@
             // 
             this.oFileDlg.FileName = "openFileDialog1";
             // 
-            // RotationToolStripMenuItem
+            // ConComToolStripMenuItem
             // 
-            this.RotationToolStripMenuItem.Name = "RotationToolStripMenuItem";
-            this.RotationToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.RotationToolStripMenuItem.Text = "旋轉";
-            this.RotationToolStripMenuItem.Click += new System.EventHandler(this.RotationToolStripMenuItem_Click);
+            this.ConComToolStripMenuItem.Name = "ConComToolStripMenuItem";
+            this.ConComToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.ConComToolStripMenuItem.Text = "組別標籤";
+            this.ConComToolStripMenuItem.Click += new System.EventHandler(this.ConComToolStripMenuItem_Click);
+            // 
+            // zoomToolStripMenuItem
+            // 
+            this.zoomToolStripMenuItem.Name = "zoomToolStripMenuItem";
+            this.zoomToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.zoomToolStripMenuItem.Text = "縮放";
+            this.zoomToolStripMenuItem.Click += new System.EventHandler(this.zoomToolStripMenuItem_Click_1);
             // 
             // DIPSample
             // 
@@ -232,6 +244,9 @@
         private System.Windows.Forms.ToolStripMenuItem iPToolStripMenuItem;
         private System.Windows.Forms.OpenFileDialog oFileDlg;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+
+        public ToolStripMenuItem ConnectedComponentToolStripMenuItem { get; private set; }
+
         private System.Windows.Forms.ToolStripMenuItem rGBtoGrayToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem NegativeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ContrastANDBrightnessToolStripMenuItem;
@@ -243,5 +258,7 @@
         private System.Windows.Forms.ToolStripMenuItem FilterToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem OtsuToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem RotationToolStripMenuItem;
+        private ToolStripMenuItem ConComToolStripMenuItem;
+        private ToolStripMenuItem zoomToolStripMenuItem;
     }
 }

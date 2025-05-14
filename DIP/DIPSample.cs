@@ -419,18 +419,6 @@ namespace DIP
             }
         }
 
-        private void zoomToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            foreach (MSForm cF in MdiChildren)
-            {
-                if (cF.Focused)
-                {
-                    Zoom zoom = new Zoom(cF.pBitmap, this);
-                    zoom.Show();
-                }
-            }
-        }
-
         private void OtsuToolStripMenuItem_Click(object sender, EventArgs e)
         {
             int[] f;
@@ -459,7 +447,19 @@ namespace DIP
             childForm.Show();
         }
 
-        private void ConnectedComponentToolStripMenuItem_Click(object sender, EventArgs e)
+        private void zoomToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            foreach (MSForm cF in MdiChildren)
+            {
+                if (cF.Focused)
+                {
+                    Zoom zoom = new Zoom(cF.pBitmap, this);
+                    zoom.Show();
+                }
+            }
+        }
+
+        private void ConComToolStripMenuItem_Click(object sender, EventArgs e)
         {
             int[] f;
             int[] g;
@@ -486,5 +486,6 @@ namespace DIP
             childForm.pBitmap = NpBitmap;
             childForm.Show();
         }
+
     }
 }
