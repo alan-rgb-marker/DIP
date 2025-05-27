@@ -47,10 +47,10 @@ namespace DIP
             this.FilterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RotationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.OtsuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.oFileDlg = new System.Windows.Forms.OpenFileDialog();
-            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.ConComToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.zoomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.oFileDlg = new System.Windows.Forms.OpenFileDialog();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -95,7 +95,7 @@ namespace DIP
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.openToolStripMenuItem.Text = "&Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
@@ -196,15 +196,11 @@ namespace DIP
             this.OtsuToolStripMenuItem.Text = "二值化";
             this.OtsuToolStripMenuItem.Click += new System.EventHandler(this.OtsuToolStripMenuItem_Click);
             // 
-            // oFileDlg
-            // 
-            this.oFileDlg.FileName = "openFileDialog1";
-            // 
             // ConComToolStripMenuItem
             // 
             this.ConComToolStripMenuItem.Name = "ConComToolStripMenuItem";
             this.ConComToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.ConComToolStripMenuItem.Text = "組別標籤";
+            this.ConComToolStripMenuItem.Text = "連通標記";
             this.ConComToolStripMenuItem.Click += new System.EventHandler(this.ConComToolStripMenuItem_Click);
             // 
             // zoomToolStripMenuItem
@@ -213,6 +209,10 @@ namespace DIP
             this.zoomToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.zoomToolStripMenuItem.Text = "縮放";
             this.zoomToolStripMenuItem.Click += new System.EventHandler(this.zoomToolStripMenuItem_Click_1);
+            // 
+            // oFileDlg
+            // 
+            this.oFileDlg.FileName = "openFileDialog1";
             // 
             // DIPSample
             // 
