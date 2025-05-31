@@ -38,6 +38,8 @@ namespace DIP
         unsafe public static extern void Otsu(int* f, int w, int h, int* g, int histSize);
         [DllImport("dip_proc.dll", CallingConvention = CallingConvention.Cdecl)]
         unsafe public static extern void connected_component(int* f, int w, int h, int* g);
+        [DllImport("dip_proc.dll", CallingConvention = CallingConvention.Cdecl)]
+        unsafe public static extern void salt_and_pepper(int* f, int w, int h, int* g);
 
 
 
@@ -454,6 +456,35 @@ namespace DIP
                 }
             }
         }
+
+        private void Salt_And_PepperToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int[] f;
+            int[] g;
+            foreach (MSForm cF in MdiChildren)
+            {
+                if (cF.Focused)
+                {
+                    f = bmp2array(cF.pBitmap);
+                    g = new int[w * h];
+                    unsafe
+                    {
+                        fixed (int* f0 = f) fixed (int* g0 = g)
+                        {
+                            salt_and_pepper(f0, w, h, g0);
+                        }
+                    }
+                    NpBitmap = array2bmp(g);
+                    break;
+                }
+            }
+            MSForm childForm = new MSForm();
+            childForm.MdiParent = this;
+            childForm.pf1 = stStripLabel;
+            childForm.pBitmap = NpBitmap;
+            childForm.Show();
+        }
+        
 
         private void ConComToolStripMenuItem_Click(object sender, EventArgs e)
         {

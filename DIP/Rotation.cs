@@ -34,12 +34,15 @@ namespace DIP
 
         [DllImport("dip_proc.dll", CallingConvention = CallingConvention.Cdecl)]
         unsafe public static extern void rotations(int* f, int w, int h, int nw, int nh, int* g, int theta);
+        [DllImport("dip_proc.dll", CallingConvention = CallingConvention.Cdecl)]
+        unsafe public static extern void salt_and_pepper(int* f, int w, int h, int* g);
 
         private void hScrollBar1_ValueChanged(object sender, EventArgs e)
         {
             textBox1.Text = hScrollBar1.Value.ToString();   
             int[] f;
             int[] g;
+            int[] g1;
             int w = npBitmap.Width;
             int h = npBitmap.Height;
             int theta = hScrollBar1.Value;
@@ -50,14 +53,17 @@ namespace DIP
             int nh = ((int)((w * Math.Abs(Math.Cos(theta_rad)) + h * Math.Abs(Math.Sin(theta_rad)))) + 1);
             f = sample.bmp2array(npBitmap);
             g = new int[(nw) * (nh)];
+            g1 = new int[(nw) * (nh)];
             unsafe
             {
-                fixed (int* f0 = f) fixed (int* g0 = g)
+                fixed (int* f0 = f) fixed (int* g0 = g) fixed (int* g1_0 = g1)
                 {
                     rotations(f0, w, h, nw, nh, g0, theta);
+
+                    salt_and_pepper(g0, nw, nh, g1_0);
                 }
             }
-            pictureBox1.Image = DIPSample.array2bmp(g);
+            pictureBox1.Image = DIPSample.array2bmp(g1);
 
         }
 
@@ -67,14 +73,5 @@ namespace DIP
             this.Close();
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void hScrollBar1_Scroll(object sender, ScrollEventArgs e)
-        {
-
-        }
     }
 }

@@ -5,6 +5,7 @@
 #include <cmath>
 #include <numbers>
 #include <vector>
+#include <algorithm>
 
 extern "C" {
 	__declspec(dllexport) void negative(int *f, int w, int h, int *g)
@@ -132,46 +133,41 @@ extern "C" {
         }
     }
 
-	//__declspec(dllexport) void Filter(int* f, int w, int h, int* g, double* kernel){  
- //       int x, y, i, j;
- //       int kernel_size = 5;
- //       int offset = kernel_size / 2;  
-	//	int dx[25];
- //       int dy[25];
-
- //       for (i = 0; i < kernel_size; i++) {
- //           for (j = 0; j < kernel_size; j++) {
- //               dx[i * kernel_size + j] = j - offset;  
- //               dy[i * kernel_size + j] = i - offset;  
- //           }
- //       }
- //       for (y = 0; y < h; y++)
- //       {
- //           for (x = 0; x < w; x++)
- //           {
- //               double sum = 0.0;
- //               for (i = 0; i < 25; i++)
- //               {
- //                   int xx = x + dx[i];
- //                   int yy = y + dy[i];
-
- //                   unsigned char pixel = 0; // 預設取不到的地方是 0
-
- //                   if (xx >= 0 && xx < w && yy >= 0 && yy < h)
- //                   {
- //                       pixel = f[yy * w + xx];
- //                   }
-
- //                   sum += pixel * kernel[i];
- //               }
-
- //               if (sum < 0.0) sum = 0.0;
- //               if (sum > 255.0) sum = 255.0;
-
- //               g[y * w + x] = (unsigned char)(sum);
- //           }
- //       }
- //   }
+//__declspec(dllexport) void Filter(int* f, int w, int h, int* g, double* kernel){  
+//       int x, y, i, j;
+//       int kernel_size = 5;
+//       int offset = kernel_size / 2;  
+//	int dx[25];
+//       int dy[25];
+//       for (i = 0; i < kernel_size; i++) {
+//           for (j = 0; j < kernel_size; j++) {
+//               dx[i * kernel_size + j] = j - offset;  
+//               dy[i * kernel_size + j] = i - offset;  
+//           }
+//       }
+//       for (y = 0; y < h; y++)
+//       {
+//           for (x = 0; x < w; x++)
+//           {
+//               double sum = 0.0;
+//               for (i = 0; i < 25; i++)
+//               {
+//                   int xx = x + dx[i];
+//                   int yy = y + dy[i];
+//                   unsigned char pixel = 0; // 預設取不到的地方是 0
+//                   if (xx >= 0 && xx < w && yy >= 0 && yy < h)
+//                   {
+//                       pixel = f[yy * w + xx];
+//                   }
+//                   sum += pixel * kernel[i];
+//               }
+//               if (sum < 0.0) sum = 0.0;
+//               if (sum > 255.0) sum = 255.0;
+//               g[y * w + x] = (unsigned char)(sum);
+//           }
+//       }
+//   }
+    
     __declspec(dllexport) void Filter(int* f, int w, int h, int* g, double* kernel, double sigma) {
         int kernel_size = 5;
         int offset = kernel_size / 2;
@@ -252,6 +248,29 @@ extern "C" {
         }
 
     }
+
+    //胡椒鹽濾波
+    __declspec(dllexport)void salt_and_pepper(int* f, int w, int h, int* g) {
+        for (int i = 0; i < h; i++)
+        {
+            for (int j = 0; j < w; j++)
+            {
+                if (j + 2 > w - 1) {
+                    g[i * w + j] = f[i * w + j];  //邊界處不做處理
+                }
+                else {
+                    int tmp[3];
+                    tmp[0] = f[i * w + j];  //取三個值
+                    tmp[1] = f[i * w + j + 1];  //取三個值
+                    tmp[2] = f[i * w + j + 2];  //取三個值
+                    std::sort(tmp, tmp + 3); //取三個值排序
+                    g[i * w + j] = tmp[1]; //取中間值
+                }
+            }
+            
+        }
+	}
+
     __declspec(dllexport)void Otsu(int* f, int w, int h, int* g, int histSize) {
         int total = w * h;  //像素數
         int* hist = (int*)malloc(sizeof(int) * histSize);  //直方圖

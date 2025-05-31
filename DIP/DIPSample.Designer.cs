@@ -51,6 +51,7 @@ namespace DIP
             this.zoomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.oFileDlg = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.Salt_And_PepperToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -95,7 +96,7 @@ namespace DIP
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
             this.openToolStripMenuItem.Text = "&Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
@@ -114,7 +115,8 @@ namespace DIP
             this.RotationToolStripMenuItem,
             this.OtsuToolStripMenuItem,
             this.ConComToolStripMenuItem,
-            this.zoomToolStripMenuItem});
+            this.zoomToolStripMenuItem,
+            this.Salt_And_PepperToolStripMenuItem});
             this.iPToolStripMenuItem.Name = "iPToolStripMenuItem";
             this.iPToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
             this.iPToolStripMenuItem.Text = "樣式";
@@ -214,6 +216,13 @@ namespace DIP
             // 
             this.oFileDlg.FileName = "openFileDialog1";
             // 
+            // Salt_And_PepperToolStripMenuItem
+            // 
+            this.Salt_And_PepperToolStripMenuItem.Name = "Salt_And_PepperToolStripMenuItem";
+            this.Salt_And_PepperToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.Salt_And_PepperToolStripMenuItem.Text = "胡椒鹽濾波";
+            this.Salt_And_PepperToolStripMenuItem.Click += new System.EventHandler(this.Salt_And_PepperToolStripMenuItem_Click);
+            // 
             // DIPSample
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -260,5 +269,6 @@ namespace DIP
         private System.Windows.Forms.ToolStripMenuItem RotationToolStripMenuItem;
         private ToolStripMenuItem ConComToolStripMenuItem;
         private ToolStripMenuItem zoomToolStripMenuItem;
+        private ToolStripMenuItem Salt_And_PepperToolStripMenuItem;
     }
 }
