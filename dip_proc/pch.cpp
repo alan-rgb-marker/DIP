@@ -251,12 +251,13 @@ extern "C" {
 
     //胡椒鹽濾波
     __declspec(dllexport)void salt_and_pepper(int* f, int w, int h, int* g) {
+        std::vector<int> tmp_g(h * w);
         for (int i = 0; i < h; i++)
         {
             for (int j = 0; j < w; j++)
             {
                 if (j + 2 > w - 1) {
-                    g[i * w + j] = f[i * w + j];  //邊界處不做處理
+                    tmp_g[i * w + j] = f[i * w + j];  //邊界處不做處理
                 }
                 else {
                     int tmp[3];
@@ -264,10 +265,28 @@ extern "C" {
                     tmp[1] = f[i * w + j + 1];  //取三個值
                     tmp[2] = f[i * w + j + 2];  //取三個值
                     std::sort(tmp, tmp + 3); //取三個值排序
-                    g[i * w + j] = tmp[1]; //取中間值
+                    tmp_g[i * w + j] = tmp[1]; //取中間值
                 }
             }
-            
+        }
+
+        for (int i = 0; i < w; i++)
+        {
+            for (int j = 0; j < h; j++)
+            {
+                if (j + 2 > h - 1) {
+                    g[j * w + i] = tmp_g[j * w + i];  //邊界處不做處理
+                }
+                else {
+                    int tmp[3];
+                    tmp[0] = tmp_g[j * w + i];  //取三個值
+                    tmp[1] = tmp_g[j * w + i + 1];  //取三個值
+                    tmp[2] = tmp_g[j * w + i + 2];  //取三個值
+                    std::sort(tmp, tmp + 3); //取三個值排序
+                    g[j * w + i] = tmp[1]; //取中間值
+                }
+            }
+
         }
 	}
 

@@ -461,11 +461,14 @@ namespace DIP
         {
             int[] f;
             int[] g;
+
             foreach (MSForm cF in MdiChildren)
             {
                 if (cF.Focused)
                 {
                     f = bmp2array(cF.pBitmap);
+                    w = cF.pBitmap.Width;
+                    h = cF.pBitmap.Height;
                     g = new int[w * h];
                     unsafe
                     {
