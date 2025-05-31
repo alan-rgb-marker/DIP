@@ -68,17 +68,18 @@
             this.hScrollBar1.Name = "hScrollBar1";
             this.hScrollBar1.Size = new System.Drawing.Size(145, 32);
             this.hScrollBar1.TabIndex = 2;
-            this.hScrollBar1.Value = 1;
+            this.hScrollBar1.Value = 10;
             this.hScrollBar1.ValueChanged += new System.EventHandler(this.hScrollBar1_ValueChanged);
             // 
             // hScrollBar2
             // 
             this.hScrollBar2.LargeChange = 1;
             this.hScrollBar2.Location = new System.Drawing.Point(500, 221);
-            this.hScrollBar2.Maximum = 255;
+            this.hScrollBar2.Maximum = 511;
             this.hScrollBar2.Name = "hScrollBar2";
             this.hScrollBar2.Size = new System.Drawing.Size(145, 32);
             this.hScrollBar2.TabIndex = 3;
+            this.hScrollBar2.Value = 255;
             this.hScrollBar2.ValueChanged += new System.EventHandler(this.hScrollBar2_ValueChanged);
             // 
             // textBox1

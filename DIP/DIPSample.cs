@@ -216,7 +216,6 @@ namespace DIP
 
         private void BitPlaneToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
             foreach (MSForm cF in MdiChildren)
             {
                 if (cF.Focused)
@@ -229,7 +228,6 @@ namespace DIP
 
         private void HistogramToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
             int[] f;
             int[] g = new int[256];
 
@@ -316,8 +314,6 @@ namespace DIP
                     plt.Show();
                 }
             }
-
-
         }
 
         private void FlipToolStripMenuItem_Click(object sender, EventArgs e)

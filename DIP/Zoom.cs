@@ -50,10 +50,7 @@ namespace DIP
         {
             factor = Convert.ToDouble(textBox2.Text);
         }
-        private void Zoom_Load(object sender, EventArgs e)
-        {
 
-        }
         private void button1_Click(object sender, EventArgs e)
         {
             int w = npBitmap.Width;  // 取得原始影像寬度

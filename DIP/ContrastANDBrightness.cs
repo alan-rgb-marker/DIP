@@ -29,6 +29,8 @@ namespace DIP
             pictureBox1.Image = tmp;
             NpBitmap = tmp;
             this.dip_ = dip_;
+            a = hScrollBar1.Value / 10.0f;
+            b = hScrollBar2.Value - 255;
             textBox1.Text = a.ToString();
             textBox2.Text = b.ToString();
         }
@@ -71,7 +73,7 @@ namespace DIP
             tmp = NpBitmap;
             f = dip_.bmp2array(tmp);
             g = new int[w * h];
-            b = hScrollBar2.Value;
+            b = hScrollBar2.Value-255;
             unsafe
             {
                 fixed (int* f0 = f) fixed (int* g0 = g)
