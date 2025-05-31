@@ -240,10 +240,11 @@ extern "C" {
         for (int i = 0; i < h; i++) {
             for (int j = 0; j < w; j++) {
                 for (int x = 0; x < 3; x++) {
-                    M[x] = no[x][0] * j + no[x][1] * i + no[x][2];
+                    M[x] = (int)std::round(no[x][0] * j + no[x][1] * i + no[x][2]);
                 }
                 //g[M[1] + hs / 2 * nw + (M[0] + ks / 2)] = f[i * w + j];
-                g[M[1] * nw + M[0]] = f[i * w + j];
+                if (M[0] >= 0 && M[0] < nw && M[1] >= 0 && M[1] < nh)
+                    g[M[1] * nw + M[0]] = f[i * w + j];
             }
         }
 

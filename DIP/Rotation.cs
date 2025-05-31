@@ -49,8 +49,28 @@ namespace DIP
             double theta_rad = theta * Math.PI / 180;
             //int nw = (int)Math.Round(w * Math.Cos(theta) + h * Math.Sin(theta));
             //int nh = (int)Math.Round(w * Math.Cos(theta) + h * Math.Sin(theta));
-            int nw = ((int)Math.Round((w * Math.Abs(Math.Cos(theta_rad)) + h * Math.Abs(Math.Sin(theta_rad)))));
-            int nh = ((int)Math.Round((w * Math.Abs(Math.Cos(theta_rad)) + h * Math.Abs(Math.Sin(theta_rad)))));
+            //int nw = ((int)Math.Ceiling((w * Math.Abs(Math.Cos(theta_rad)) + h * Math.Abs(Math.Sin(theta_rad)))));
+            //int nh = ((int)Math.Ceiling((w * Math.Abs(Math.Cos(theta_rad)) + h * Math.Abs(Math.Sin(theta_rad)))));
+            int nw, nh;
+            if (theta == 0 || theta == 180 || theta == 360)
+            {
+                // 0 度和 180 度時，旋轉後的寬度是 w，高度是 h
+                nw = w;
+                nh = h;
+            }
+            else if (theta == 90 || theta == 270)
+            {
+                // 90 度和 270 度時，旋轉後的寬度是 h，高度是 w
+                nw = h;
+                nh = w;
+            }
+            else
+            {
+                // 其他角度正常計算
+                nw = (int)Math.Ceiling((w * Math.Abs(Math.Cos(theta_rad)) + h * Math.Abs(Math.Sin(theta_rad))));
+                nh = (int)Math.Ceiling((w * Math.Abs(Math.Cos(theta_rad)) + h * Math.Abs(Math.Sin(theta_rad))));
+            }
+
             f = sample.bmp2array(npBitmap);
             g = new int[(nw) * (nh)];
             g1 = new int[(nw) * (nh)];
