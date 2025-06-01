@@ -442,7 +442,7 @@ extern "C" {
         for (int i = 0; i < h; i++)
         {
             for (int j = 0; j < w; j++) {
-                if (f[i * w + j] < 14) {
+                if (f[i * w + j] != 255) {
                     continue;  // 如果不是 255，就直接跳過
                 }
 				bool b = false; // 用於檢查是否有相鄰的前景像素
@@ -461,7 +461,7 @@ extern "C" {
                     }
                     
                 }
-                if (f[i * w + j] > 13 && labels[i * w + j] == -1) {
+                if (f[i * w + j] == 255 && labels[i * w + j] == -1) {
                     if (b == true)
                     {
 						labels[i * w + j] = b_value; // 標記當前像素為相鄰的前景像素值
