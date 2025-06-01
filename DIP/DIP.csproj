@@ -229,6 +229,12 @@
     <Compile Include="BitPlane.Designer.cs">
       <DependentUpon>BitPlane.cs</DependentUpon>
     </Compile>
+    <Compile Include="ConnectedComponent.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ConnectedComponent.Designer.cs">
+      <DependentUpon>ConnectedComponent.cs</DependentUpon>
+    </Compile>
     <Compile Include="ContrastANDBrightness.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -281,6 +287,9 @@
     </Compile>
     <EmbeddedResource Include="BitPlane.resx">
       <DependentUpon>BitPlane.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ConnectedComponent.resx">
+      <DependentUpon>ConnectedComponent.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ContrastANDBrightness.resx">
       <DependentUpon>ContrastANDBrightness.cs</DependentUpon>

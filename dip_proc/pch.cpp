@@ -431,40 +431,102 @@ extern "C" {
             }
         }
     }
-    __declspec(dllexport) void connected_component(int* f, int w, int h, int* g) {
-        // 初始化標記陣列
-        int label = 0;
-        int* labels = new int[w * h];
-        for (int i = 0; i < w * h; i++) {
-            labels[i] = -1; // -1 表示未標記
-        }
-        // 進行連通區域標記
-        for (int y = 0; y < h; y++) {
-            for (int x = 0; x < w; x++) {
-                if (f[y * w + x] > 0 && labels[y * w + x] == -1) { // 如果是前景且未標記
-                    label++;
-                    std::vector<std::pair<int, int>> stack;
-                    stack.push_back({ x, y });
-                    while (!stack.empty()) {
-                        auto [cx, cy] = stack.back();
-                        stack.pop_back();
-                        if (cx < 0 || cx >= w || cy < 0 || cy >= h) continue; // 邊界檢查
-                        if (f[cy * w + cx] == 0 || labels[cy * w + cx] != -1) continue; // 背景或已標記
-                        labels[cy * w + cx] = label;
-                        // 將相鄰像素加入堆疊
-                        stack.push_back({ cx + 1, cy });
-                        stack.push_back({ cx - 1, cy });
-                        stack.push_back({ cx, cy + 1 });
-                        stack.push_back({ cx, cy - 1 });
+    __declspec(dllexport) int connected_component(int* f, int w, int h) {
+
+		std::vector<int> labels(w * h, -1); // 初始化標記陣列，-1表示未標記
+        
+		int label = 0; // 標記計數器
+		int nx, ny; // 相鄰像素的座標
+        int dx[4] = { -1, 1, 0, 0 };
+        int dy[4] = { 0, 0, -1, 1 };
+        for (int i = 0; i < h; i++)
+        {
+            for (int j = 0; j < w; j++) {
+                if (f[i * w + j] < 14) {
+                    continue;  // 如果不是 255，就直接跳過
+                }
+				bool b = false; // 用於檢查是否有相鄰的前景像素
+                int b_value = -1;
+                for (size_t z = 0; z < 4; z++)
+                {
+					nx = j + dx[z]; // 計算相鄰像素的 x 座標
+					ny = i + dy[z]; // 計算相鄰像素的 y 座標
+					if (nx < 0 || nx >= w || ny < 0 || ny >= h) continue; // 邊界檢查
+
+                    if (labels[ny * w + nx] > 0)
+                    {
+                        b = true;
+                        b_value = labels[ny * w + nx];
+                        break;
+                    }
+                    
+                }
+                if (f[i * w + j] > 13 && labels[i * w + j] == -1) {
+                    if (b == true)
+                    {
+						labels[i * w + j] = b_value; // 標記當前像素為相鄰的前景像素值
+                    }
+                    else
+                    {
+                        label++;
+                        labels[i * w + j] = label;
                     }
                 }
             }
         }
-        // 將標記結果寫入輸出影像
-        for (int i = 0; i < w * h; i++) {
-            g[i] = labels[i];
-        }
-        delete[] labels;
+		return label; // 返回標記數量
+
+        //if (f[i * w + j] > 0 && labels[i * w + j] == -1) { // 如果是前景且未標記
+        //    label++;
+        //    std::vector<std::pair<int, int>> stack;
+        //    stack.push_back({ j, i }); // 將當前像素加入堆疊
+        //    while (!stack.empty()) {
+        //        auto [cx, cy] = stack.back();
+        //        stack.pop_back();
+        //        if (cx < 0 || cx >= w || cy < 0 || cy >= h) continue; // 邊界檢查
+        //        if (f[cy * w + cx] == 0 || labels[cy * w + cx] != -1) continue; // 背景或已標記
+        //        labels[cy * w + cx] = label; // 標記當前像素
+        //        // 將相鄰像素加入堆疊
+        //        stack.push_back({ cx + 1, cy });
+        //        stack.push_back({ cx - 1, cy });
+        //        stack.push_back({ cx, cy + 1 });
+        //        stack.push_back({ cx, cy - 1 });
+        //    }
+        //}
+
+        //// 初始化標記陣列
+        //int label = 0;
+        //int* labels = new int[w * h];
+        //for (int i = 0; i < w * h; i++) {
+        //    labels[i] = -1; // -1 表示未標記
+        //}
+        //// 進行連通區域標記
+        //for (int y = 0; y < h; y++) {
+        //    for (int x = 0; x < w; x++) {
+        //        if (f[y * w + x] > 0 && labels[y * w + x] == -1) { // 如果是前景且未標記
+        //            label++;
+        //            std::vector<std::pair<int, int>> stack;
+        //            stack.push_back({ x, y });
+        //            while (!stack.empty()) {
+        //                auto [cx, cy] = stack.back();
+        //                stack.pop_back();
+        //                if (cx < 0 || cx >= w || cy < 0 || cy >= h) continue; // 邊界檢查
+        //                if (f[cy * w + cx] == 0 || labels[cy * w + cx] != -1) continue; // 背景或已標記
+        //                labels[cy * w + cx] = label;
+        //                // 將相鄰像素加入堆疊
+        //                stack.push_back({ cx + 1, cy });
+        //                stack.push_back({ cx - 1, cy });
+        //                stack.push_back({ cx, cy + 1 });
+        //                stack.push_back({ cx, cy - 1 });
+        //            }
+        //        }
+        //    }
+        //}
+        //// 將標記結果寫入輸出影像
+        //for (int i = 0; i < w * h; i++) {
+        //    g[i] = labels[i];
+        //}
+        //delete[] labels;
     }
 
 }

@@ -37,11 +37,9 @@ namespace DIP
         [DllImport("dip_proc.dll", CallingConvention = CallingConvention.Cdecl)]
         unsafe public static extern void Otsu(int* f, int w, int h, int* g, int histSize);
         [DllImport("dip_proc.dll", CallingConvention = CallingConvention.Cdecl)]
-        unsafe public static extern void connected_component(int* f, int w, int h, int* g);
+        unsafe public static extern int connected_component(int* f, int w, int h);
         [DllImport("dip_proc.dll", CallingConvention = CallingConvention.Cdecl)]
         unsafe public static extern void salt_and_pepper(int* f, int w, int h, int* g);
-
-
 
         Bitmap NpBitmap;
         int[] f;
@@ -492,29 +490,32 @@ namespace DIP
         private void ConComToolStripMenuItem_Click(object sender, EventArgs e)
         {
             int[] f;
-            int[] g;
+            int sum = 0;
             foreach (MSForm cF in MdiChildren)
             {
                 if (cF.Focused)
                 {
                     f = bmp2array(cF.pBitmap);
-                    g = new int[w * h];
+                    w = cF.pBitmap.Width;
+                    h = cF.pBitmap.Height;
                     unsafe
                     {
-                        fixed (int* f0 = f) fixed (int* g0 = g)
+                        fixed (int* f0 = f)
                         {
-                            connected_component(f0, w, h, g0);
+                            sum = connected_component(f0, w, h);
                         }
                     }
-                    NpBitmap = array2bmp(g);
+
                     break;
                 }
             }
-            MSForm childForm = new MSForm();
-            childForm.MdiParent = this;
-            childForm.pf1 = stStripLabel;
-            childForm.pBitmap = NpBitmap;
-            childForm.Show();
+            ConnectedComponent conCom = new ConnectedComponent(sum);
+            conCom.Show();
+            //MSForm childForm = new MSForm();
+            //childForm.MdiParent = this;
+            //childForm.pf1 = stStripLabel;
+            //childForm.pBitmap = NpBitmap;
+            //childForm.Show();
         }
 
     }
