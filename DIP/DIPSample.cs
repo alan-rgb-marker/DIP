@@ -85,6 +85,7 @@ namespace DIP
             return pBitmap;
         }
 
+        //灰階影像轉陣列
         public int[] bmp2array(Bitmap myBitmap)
         {
             int[] ImgData = new int[myBitmap.Width * myBitmap.Height];
@@ -111,6 +112,7 @@ namespace DIP
             return ImgData;
         }
 
+        //黑白影像轉陣列
         public int[] onebit_bmp2array(Bitmap myBitmap)
         {
             
