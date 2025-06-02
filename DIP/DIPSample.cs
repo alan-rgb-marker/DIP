@@ -111,6 +111,45 @@ namespace DIP
             return ImgData;
         }
 
+        public int[] onebit_bmp2array(Bitmap myBitmap)
+        {
+            
+            int[] ImgData = new int[myBitmap.Width * myBitmap.Height];
+            BitmapData byteArray = myBitmap.LockBits(new Rectangle(0, 0, myBitmap.Width, myBitmap.Height),
+                                                     ImageLockMode.ReadOnly,  // 僅讀取影像資料
+                                                     myBitmap.PixelFormat);
+
+            if (myBitmap.PixelFormat != PixelFormat.Format1bppIndexed)
+            {
+                throw new NotSupportedException("僅支援 1 位元索引影像格式 (1bpp indexed)。");
+            }
+
+            int width = byteArray.Width;
+            int height = byteArray.Height;
+            int stride = byteArray.Stride;
+
+            unsafe
+            {
+                byte* scan0 = (byte*)byteArray.Scan0;
+                for (int y = 0; y < height; y++)
+                {
+                    byte* rowStart = scan0 + y * stride;
+                    for (int x = 0; x < width; x++)
+                    {
+                        int byteIndex = x / 8;           // 計算像素所在的位元組索引
+                        int bitIndex = 7 - (x % 8);      // 計算該像素在位元組中的位元位置
+                        byte b = rowStart[byteIndex];    // 讀取該位元組
+                        int pixelValue = (b >> bitIndex) & 1;  // 提取位元值（0 或 1）
+                        ImgData[y * width + x] = pixelValue;   // 儲存到陣列中
+                    }
+                }
+            }
+
+            myBitmap.UnlockBits(byteArray);
+            return ImgData;
+        }
+
+
         public static Bitmap array2bmp(int[] ImgData)
         {
             int Width = (int)Math.Sqrt(ImgData.GetLength(0));
@@ -495,7 +534,7 @@ namespace DIP
             {
                 if (cF.Focused)
                 {
-                    f = bmp2array(cF.pBitmap);
+                    f =onebit_bmp2array(cF.pBitmap);
                     w = cF.pBitmap.Width;
                     h = cF.pBitmap.Height;
                     unsafe
