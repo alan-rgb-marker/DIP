@@ -79,10 +79,10 @@ namespace DIP
                 fixed (int* f0 = f) fixed (int* g0 = g) fixed (int* g1_0 = g1)
                 {
                     rotations(f0, w, h, nw, nh, g0, theta);
-                    salt_and_pepper(g0, nw, nh, g1_0);
+                    //salt_and_pepper(g0, nw, nh, g1_0);
                 }
             }
-            pictureBox1.Image = DIPSample.array2bmp(g1);
+            pictureBox1.Image = DIPSample.array2bmp(g);
 
         }
 

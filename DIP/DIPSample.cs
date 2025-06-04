@@ -552,11 +552,6 @@ namespace DIP
             }
             ConnectedComponent conCom = new ConnectedComponent(sum);
             conCom.Show();
-            //MSForm childForm = new MSForm();
-            //childForm.MdiParent = this;
-            //childForm.pf1 = stStripLabel;
-            //childForm.pBitmap = NpBitmap;
-            //childForm.Show();
         }
 
     }

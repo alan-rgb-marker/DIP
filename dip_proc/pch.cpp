@@ -220,7 +220,7 @@ extern "C" {
     }
 
     __declspec(dllexport) void rotations(int* f, int w, int h, int nw, int nh, int* g, int theta) {
-
+        /*
         double theta_rad = theta * std::numbers::pi / 180;
         int hs = w / 2;
         int ks = h / 2;
@@ -242,13 +242,106 @@ extern "C" {
                 for (int x = 0; x < 3; x++) {
                     M[x] = (int)std::round(no[x][0] * j + no[x][1] * i + no[x][2]);
                 }
+
                 //g[M[1] + hs / 2 * nw + (M[0] + ks / 2)] = f[i * w + j];
                 if (M[0] >= 0 && M[0] < nw && M[1] >= 0 && M[1] < nh)
                     g[M[1] * nw + M[0]] = f[i * w + j];
+
+            }
+        }
+
+		int dx[4] = { -1, 1, 0, 0 };
+		int dy[4] = { 0, 0, -1, 1 };
+
+        for (int i = 0; i < nh; i++)
+        {
+            for (int j = 0; j < nw; j++)
+            {
+                if (g[i * nw + j]!=0) continue;
+                bool b = false;
+                for (size_t z = 0; z < 4; z++)
+                {
+                    int nx = j + dx[z]; // 計算相鄰像素的 x 座標
+                    int ny = i + dy[z]; // 計算相鄰像素的 y 座標
+                    if (nx < 0 || nx >= nw || ny < 0 || ny >= nh) continue; // 邊界檢查
+                    if (g[ny * nw + nx] > 0)
+                    {
+                        b = true;
+                        break;
+                    }
+                }      
+                if (b == true) {
+                    g[i * nw + j] = (g[i * nw + j + 1] + g[i * nw + j - 1])/2;
+                }
+            }
+        }
+        */
+        if (theta % 360 == 0)
+        {
+            for(int i = 0; i < h * w; i++)
+				g[i] = f[i]; // 如果角度是 0，直接複製原圖
+        }
+        else if (theta % 270 == 0) {
+            for (size_t i = 0; i < h; i++)
+            {
+                for (int j = 0; j < w; j++) {
+                    g[(255 - j) * w + i] = f[i * w + j];
+                }
+            }
+        }
+        else {
+            double theta_rad = theta * std::numbers::pi / 180.0;
+            int hs = w / 2;
+            int ks = h / 2;
+            int new_hs = nw / 2;
+            int new_ks = nh / 2;
+
+            // 初始化輸出畫布為黑色（灰階255）
+            std::fill(g, g + nw * nh, 255);
+
+            // 反向旋轉矩陣
+            double cos_theta = std::cos(-theta_rad);
+            double sin_theta = std::sin(-theta_rad);
+
+            for (int y_new = 0; y_new < nh; ++y_new) {
+                for (int x_new = 0; x_new < nw; ++x_new) {
+                    // 轉換到中心座標系
+                    double x_centered = x_new - new_hs;
+                    double y_centered = y_new - new_ks;
+
+
+
+                    // 反向旋轉對應原圖座標
+                    double x_src = cos_theta * x_centered - sin_theta * y_centered + hs;
+                    double y_src = sin_theta * x_centered + cos_theta * y_centered + ks;
+
+                    // 檢查是否在原圖範圍內
+                    if (x_src >= 0 && x_src < w - 1 && y_src >= 0 && y_src < h - 1) {
+                        // 進行雙線性插值
+                        int x0 = (int)std::floor(x_src);
+                        int y0 = (int)std::floor(y_src);
+                        double dx = x_src - x0;
+                        double dy = y_src - y0;
+
+                        int p00 = f[y0 * w + x0];
+                        int p10 = f[y0 * w + (x0 + 1)];
+                        int p01 = f[(y0 + 1) * w + x0];
+                        int p11 = f[(y0 + 1) * w + (x0 + 1)];
+
+                        double interpolated =
+                            (1 - dx) * (1 - dy) * p00 +
+                            dx * (1 - dy) * p10 +
+                            (1 - dx) * dy * p01 +
+                            dx * dy * p11;
+
+                        g[y_new * nw + x_new] = (int)std::round(interpolated);
+                    }
+                }
             }
         }
 
     }
+
 
     //胡椒鹽濾波
     __declspec(dllexport)void salt_and_pepper(int* f, int w, int h, int* g) {
@@ -475,58 +568,6 @@ extern "C" {
             }
         }
 		return label; // 返回標記數量
-
-        //if (f[i * w + j] > 0 && labels[i * w + j] == -1) { // 如果是前景且未標記
-        //    label++;
-        //    std::vector<std::pair<int, int>> stack;
-        //    stack.push_back({ j, i }); // 將當前像素加入堆疊
-        //    while (!stack.empty()) {
-        //        auto [cx, cy] = stack.back();
-        //        stack.pop_back();
-        //        if (cx < 0 || cx >= w || cy < 0 || cy >= h) continue; // 邊界檢查
-        //        if (f[cy * w + cx] == 0 || labels[cy * w + cx] != -1) continue; // 背景或已標記
-        //        labels[cy * w + cx] = label; // 標記當前像素
-        //        // 將相鄰像素加入堆疊
-        //        stack.push_back({ cx + 1, cy });
-        //        stack.push_back({ cx - 1, cy });
-        //        stack.push_back({ cx, cy + 1 });
-        //        stack.push_back({ cx, cy - 1 });
-        //    }
-        //}
-
-        //// 初始化標記陣列
-        //int label = 0;
-        //int* labels = new int[w * h];
-        //for (int i = 0; i < w * h; i++) {
-        //    labels[i] = -1; // -1 表示未標記
-        //}
-        //// 進行連通區域標記
-        //for (int y = 0; y < h; y++) {
-        //    for (int x = 0; x < w; x++) {
-        //        if (f[y * w + x] > 0 && labels[y * w + x] == -1) { // 如果是前景且未標記
-        //            label++;
-        //            std::vector<std::pair<int, int>> stack;
-        //            stack.push_back({ x, y });
-        //            while (!stack.empty()) {
-        //                auto [cx, cy] = stack.back();
-        //                stack.pop_back();
-        //                if (cx < 0 || cx >= w || cy < 0 || cy >= h) continue; // 邊界檢查
-        //                if (f[cy * w + cx] == 0 || labels[cy * w + cx] != -1) continue; // 背景或已標記
-        //                labels[cy * w + cx] = label;
-        //                // 將相鄰像素加入堆疊
-        //                stack.push_back({ cx + 1, cy });
-        //                stack.push_back({ cx - 1, cy });
-        //                stack.push_back({ cx, cy + 1 });
-        //                stack.push_back({ cx, cy - 1 });
-        //            }
-        //        }
-        //    }
-        //}
-        //// 將標記結果寫入輸出影像
-        //for (int i = 0; i < w * h; i++) {
-        //    g[i] = labels[i];
-        //}
-        //delete[] labels;
     }
 
 }
