@@ -49,9 +49,11 @@ namespace DIP
             this.OtsuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ConComToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.zoomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Salt_And_PepperToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.oFileDlg = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.Salt_And_PepperToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.霍夫轉換ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.HoughTransformLineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -116,7 +118,8 @@ namespace DIP
             this.OtsuToolStripMenuItem,
             this.ConComToolStripMenuItem,
             this.zoomToolStripMenuItem,
-            this.Salt_And_PepperToolStripMenuItem});
+            this.Salt_And_PepperToolStripMenuItem,
+            this.霍夫轉換ToolStripMenuItem});
             this.iPToolStripMenuItem.Name = "iPToolStripMenuItem";
             this.iPToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
             this.iPToolStripMenuItem.Text = "樣式";
@@ -212,16 +215,31 @@ namespace DIP
             this.zoomToolStripMenuItem.Text = "縮放";
             this.zoomToolStripMenuItem.Click += new System.EventHandler(this.zoomToolStripMenuItem_Click_1);
             // 
-            // oFileDlg
-            // 
-            this.oFileDlg.FileName = "openFileDialog1";
-            // 
             // Salt_And_PepperToolStripMenuItem
             // 
             this.Salt_And_PepperToolStripMenuItem.Name = "Salt_And_PepperToolStripMenuItem";
             this.Salt_And_PepperToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.Salt_And_PepperToolStripMenuItem.Text = "胡椒鹽濾波";
             this.Salt_And_PepperToolStripMenuItem.Click += new System.EventHandler(this.Salt_And_PepperToolStripMenuItem_Click);
+            // 
+            // oFileDlg
+            // 
+            this.oFileDlg.FileName = "openFileDialog1";
+            // 
+            // 霍夫轉換ToolStripMenuItem
+            // 
+            this.霍夫轉換ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.HoughTransformLineToolStripMenuItem});
+            this.霍夫轉換ToolStripMenuItem.Name = "霍夫轉換ToolStripMenuItem";
+            this.霍夫轉換ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.霍夫轉換ToolStripMenuItem.Text = "霍夫轉換";
+            // 
+            // HoughTransformLineToolStripMenuItem
+            // 
+            this.HoughTransformLineToolStripMenuItem.Name = "HoughTransformLineToolStripMenuItem";
+            this.HoughTransformLineToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.HoughTransformLineToolStripMenuItem.Text = "線";
+            this.HoughTransformLineToolStripMenuItem.Click += new System.EventHandler(this.HoughTransformLineToolStripMenuItem_Click);
             // 
             // DIPSample
             // 
@@ -270,5 +288,7 @@ namespace DIP
         private ToolStripMenuItem ConComToolStripMenuItem;
         private ToolStripMenuItem zoomToolStripMenuItem;
         private ToolStripMenuItem Salt_And_PepperToolStripMenuItem;
+        private ToolStripMenuItem 霍夫轉換ToolStripMenuItem;
+        private ToolStripMenuItem HoughTransformLineToolStripMenuItem;
     }
 }

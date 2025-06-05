@@ -6,6 +6,7 @@
 #include <numbers>
 #include <vector>
 #include <algorithm>
+#include <cstdlib>
 
 extern "C" {
 	__declspec(dllexport) void negative(int *f, int w, int h, int *g)
@@ -568,6 +569,73 @@ extern "C" {
             }
         }
 		return label; // 返回標記數量
+    }
+ 
+
+// 在輸出影像 g 上畫線時的顏色（灰階值）。可自行調整。
+// 0 表示黑，255 表示白。這裡我們用白色 (255) 來畫出偵測到的直線。
+
+    __declspec(dllexport) void hough_line_transform(int* f, int w, int h, int* g) {
+        const int max_r = 362;
+        int labels[180][max_r * 2] = { 0 }; //第一欄是r 第二欄是角度
+        //std::vector<std::vector<int>> labels(180, std::vector<int>(256, 0));
+        int r;
+        double theta;
+        /*for (size_t i = 0; i < h * w; i++)
+        {
+            g[i] = 0;
+        }*/
+        for (size_t i = 0; i < h; i++)
+        {
+            for (size_t j = 0; j < w; j++) {  
+                if (f[i * w + j] == 0)continue;
+                
+                for (size_t b = 0; b < 180; b++) {
+                    theta = b * std::numbers::pi / 180;
+                    r = (int)std::floor(j * cos(theta) + i * sin(theta));
+                    if (r >= 0)
+                    {
+                        labels[b][r]++;
+                    }
+                    else if (r < 0)
+                    {
+                        labels[b][-r + max_r]++;
+                    }
+
+                }
+            }
+        }
+
+        for (size_t i = 0; i < 180; i++)
+        {
+            for (size_t j = 0; j < 2 * max_r; j++)
+            {
+                if (labels[i][j] > 20) {
+                    for (size_t y = 0; y < h; y++)
+                    {
+                        for (size_t x = 0; x < w; x++)
+                        {
+                            if (f[i * w + j] == 0)continue;
+                            theta = i * std::numbers::pi / 180;
+                            int tmp = (int)std::floor(x * cos(theta) + y * sin(theta));
+                            if (tmp < 0)
+                            {
+                                tmp = max_r - tmp;
+                            }
+                            if (j == tmp)
+                            {
+                                g[y * w + x] = 255;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+      
+    }
+
+    __declspec(dllexport) void hough_circle_transform(int* f, int w, int h, int* g) {
+
     }
 
 }

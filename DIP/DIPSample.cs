@@ -40,6 +40,8 @@ namespace DIP
         unsafe public static extern int connected_component(int* f, int w, int h);
         [DllImport("dip_proc.dll", CallingConvention = CallingConvention.Cdecl)]
         unsafe public static extern void salt_and_pepper(int* f, int w, int h, int* g);
+        [DllImport("dip_proc.dll", CallingConvention = CallingConvention.Cdecl)]
+        unsafe public static extern void hough_line_transform(int* f, int w, int h, int* g);
 
         Bitmap NpBitmap;
         int[] f;
@@ -398,7 +400,7 @@ namespace DIP
             childForm.pBitmap = NpBitmap;
             childForm.Show();
         }
-        //================================================================================================
+        //========================================================================================
         public Bitmap origin;
         public Bitmap tmp;
         public Bitmap FilterPicture(double[] kernel,double sigma)
@@ -526,7 +528,34 @@ namespace DIP
             childForm.pBitmap = NpBitmap;
             childForm.Show();
         }
-        
+
+        private void HoughTransformLineToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int[] f;
+            int[] g;
+            foreach (MSForm cF in MdiChildren)
+            {
+                if (cF.Focused)
+                {
+                    f = bmp2array(cF.pBitmap);
+                    g = new int[w * h];
+                    unsafe
+                    {
+                        fixed (int* f0 = f) fixed (int* g0 = g)
+                        {
+                            hough_line_transform(f0, w, h, g0);
+                        }
+                    }
+                    NpBitmap = array2bmp(g);
+                    break;
+                }
+            }
+            MSForm childForm = new MSForm();
+            childForm.MdiParent = this;
+            childForm.pf1 = stStripLabel;
+            childForm.pBitmap = NpBitmap;
+            childForm.Show();
+        }
 
         private void ConComToolStripMenuItem_Click(object sender, EventArgs e)
         {
