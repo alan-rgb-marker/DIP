@@ -586,11 +586,14 @@ extern "C" {
         {
             g[i] = 0;
         }
+
         for (size_t i = 0; i < h; i++)
         {
-            for (size_t j = 0; j < w; j++) {  
+            for (size_t j = 0; j < w; j++) { 
+                //如果是黑色就跳下一個
                 if (f[i * w + j] == 0)continue;
                 
+                //計算r和ʘ的值
                 for (size_t b = 0; b < 180; b++) {
                     theta = b * std::numbers::pi / 180;
                     r = (int)std::floor(j * cos(theta) + i * sin(theta));
