@@ -575,16 +575,17 @@ extern "C" {
 // 在輸出影像 g 上畫線時的顏色（灰階值）。可自行調整。
 // 0 表示黑，255 表示白。這裡我們用白色 (255) 來畫出偵測到的直線。
 
-    __declspec(dllexport) void hough_line_transform(int* f, int w, int h, int* g) {
-        const int max_r = 362;
-        int labels[180][max_r * 2] = { 0 }; //第一欄是r 第二欄是角度
-        //std::vector<std::vector<int>> labels(180, std::vector<int>(256, 0));
+    __declspec(dllexport) int hough_line_transform(int* f, int w, int h, int* g) {
+        const int max_r = (int)std::floor(std::sqrt(w * w + h * h)) + 1;
+        //int labels[180][max_r * 2] = { 0 }; //第一欄是r 第二欄是角度
+        std::vector<std::vector<int>> labels(180, std::vector<int>(max_r * 2, 0));
         int r;
         double theta;
-        /*for (size_t i = 0; i < h * w; i++)
+        int ct = 0;
+        for (size_t i = 0; i < h * w; i++)
         {
             g[i] = 0;
-        }*/
+        }
         for (size_t i = 0; i < h; i++)
         {
             for (size_t j = 0; j < w; j++) {  
@@ -606,32 +607,80 @@ extern "C" {
             }
         }
 
-        for (size_t i = 0; i < 180; i++)
-        {
-            for (size_t j = 0; j < 2 * max_r; j++)
-            {
-                if (labels[i][j] > 20) {
-                    for (size_t y = 0; y < h; y++)
-                    {
-                        for (size_t x = 0; x < w; x++)
-                        {
-                            if (f[i * w + j] == 0)continue;
-                            theta = i * std::numbers::pi / 180;
-                            int tmp = (int)std::floor(x * cos(theta) + y * sin(theta));
-                            if (tmp < 0)
-                            {
-                                tmp = max_r - tmp;
+        //for (size_t i = 0; i < 180; i++)
+        //{
+        //    for (size_t j = 0; j < 2 * max_r; j++)
+        //    {
+        //        if (labels[i][j] > 41) {
+        //            ct++;
+        //            for (size_t y = 0; y < h; y++)
+        //            {
+        //                for (size_t x = 0; x < w; x++)
+        //                {
+        //                    //if (f[y * w + x] == 0)continue;
+        //                    theta = i * std::numbers::pi / 180;
+        //                    int tmp = (int)std::round(x * cos(theta) + y * sin(theta));
+        //                    if (tmp < 0)
+        //                    {
+        //                        tmp =  -tmp + max_r;
+        //                    }
+        //                    if (j == tmp)
+        //                    {
+        //                        g[y * w + x] = 255;
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
+        for (size_t i = 0; i < 180; i++) { // θ 從 0 到 179 度
+            for (size_t j = 0; j < 2 * max_r; j++) { // r 的範圍
+                if (labels[i][j] > 41) { // 投票數超過閾值
+                    // 檢查是否為局部最大值
+                    bool is_peak = true;
+                    // 檢查 θ 和 r 方向 ±1 的鄰域
+                    for (int di = -4; di <= 4 && is_peak; di++) {
+                        for (int dj = -4; dj <= 4; dj++) {
+                            if (di == 0 && dj == 0) continue; // 跳過自己
+                            size_t ni = i + di; // 鄰居的 θ
+                            size_t nj = j + dj; // 鄰居的 r
+                            // 確保不超出範圍
+                            if (ni >= 0 && ni < 180 && nj >= 0 && nj < 2 * max_r) {
+                                if (labels[ni][nj] > labels[i][j]) {
+                                    is_peak = false; // 發現更大的鄰居
+                                    labels[i][j] = 0;
+                                    break;
+                                }
                             }
-                            if (j == tmp)
+                        }
+                    }
+                    if (is_peak) { // 真的是局部最大值
+                        // 在這裡畫線...
+                        // 例如：用 (θ=i°, r=j) 計算並畫出直線
+                        ct++;
+                        for (size_t y = 0; y < h; y++)
+                        {
+                            for (size_t x = 0; x < w; x++)
                             {
-                                g[y * w + x] = 255;
+                                //if (f[y * w + x] == 0)continue;
+                                theta = i * std::numbers::pi / 180;
+                                int tmp = (int)std::round(x * cos(theta) + y * sin(theta));
+                                if (tmp < 0)
+                                {
+                                    tmp =  -tmp + max_r;
+                                }
+                                if (j == tmp)
+                                {
+                                    g[y * w + x] = 255;
+                                }
                             }
                         }
                     }
                 }
             }
         }
-      
+
+        return ct;
     }
 
     __declspec(dllexport) void hough_circle_transform(int* f, int w, int h, int* g) {

@@ -41,7 +41,7 @@ namespace DIP
         [DllImport("dip_proc.dll", CallingConvention = CallingConvention.Cdecl)]
         unsafe public static extern void salt_and_pepper(int* f, int w, int h, int* g);
         [DllImport("dip_proc.dll", CallingConvention = CallingConvention.Cdecl)]
-        unsafe public static extern void hough_line_transform(int* f, int w, int h, int* g);
+        unsafe public static extern int hough_line_transform(int* f, int w, int h, int* g);
 
         Bitmap NpBitmap;
         int[] f;
@@ -533,17 +533,20 @@ namespace DIP
         {
             int[] f;
             int[] g;
+            int ct = 0;
             foreach (MSForm cF in MdiChildren)
             {
                 if (cF.Focused)
                 {
                     f = bmp2array(cF.pBitmap);
+                    w = cF.pBitmap.Width;
+                    h = cF.pBitmap.Height;
                     g = new int[w * h];
                     unsafe
                     {
                         fixed (int* f0 = f) fixed (int* g0 = g)
                         {
-                            hough_line_transform(f0, w, h, g0);
+                            ct = hough_line_transform(f0, w, h, g0);
                         }
                     }
                     NpBitmap = array2bmp(g);
@@ -555,6 +558,8 @@ namespace DIP
             childForm.pf1 = stStripLabel;
             childForm.pBitmap = NpBitmap;
             childForm.Show();
+            ConnectedComponent houghlinetransform = new ConnectedComponent(ct);
+            houghlinetransform.Show();
         }
 
         private void ConComToolStripMenuItem_Click(object sender, EventArgs e)
