@@ -42,6 +42,8 @@ namespace DIP
         unsafe public static extern void salt_and_pepper(int* f, int w, int h, int* g);
         [DllImport("dip_proc.dll", CallingConvention = CallingConvention.Cdecl)]
         unsafe public static extern int hough_line_transform(int* f, int w, int h, int* g);
+        [DllImport("dip_proc.dll", CallingConvention = CallingConvention.Cdecl)]
+        unsafe public static extern int hough_circle_transform(int* f, int w, int h, int* g);
 
         Bitmap NpBitmap;
         int[] f;
@@ -547,6 +549,39 @@ namespace DIP
                         fixed (int* f0 = f) fixed (int* g0 = g)
                         {
                             ct = hough_line_transform(f0, w, h, g0);
+                        }
+                    }
+                    NpBitmap = array2bmp(g);
+                    break;
+                }
+            }
+            MSForm childForm = new MSForm();
+            childForm.MdiParent = this;
+            childForm.pf1 = stStripLabel;
+            childForm.pBitmap = NpBitmap;
+            childForm.Show();
+            ConnectedComponent houghlinetransform = new ConnectedComponent(ct);
+            houghlinetransform.Show();
+        }
+
+        private void HoughTransformCircleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int[] f;
+            int[] g;
+            int ct = 0;
+            foreach (MSForm cF in MdiChildren)
+            {
+                if (cF.Focused)
+                {
+                    f = bmp2array(cF.pBitmap);
+                    w = cF.pBitmap.Width;
+                    h = cF.pBitmap.Height;
+                    g = new int[w * h];
+                    unsafe
+                    {
+                        fixed (int* f0 = f) fixed (int* g0 = g)
+                        {
+                            ct = hough_circle_transform(f0, w, h, g0);
                         }
                     }
                     NpBitmap = array2bmp(g);

@@ -686,8 +686,57 @@ extern "C" {
         return ct;
     }
 
-    __declspec(dllexport) void hough_circle_transform(int* f, int w, int h, int* g) {
+    __declspec(dllexport) int hough_circle_transform(int* f, int w, int h, int* g) {
+        // label[a][b][r]
+        const int A = w, B = h, R = 100;
+        std::vector<std::vector<std::vector<int>>> labels(A, std::vector<std::vector<int>>(B, std::vector<int>(R, 0)));
+        int ct = 0;
+        for (size_t i = 0; i < w * h; i++)
+        {
+            g[i] = 0;
+        }
 
+        for (size_t y = 0; y < h; y++)
+        {
+            for (size_t x = 0; x < w; x++)
+            {        
+                if (f[y * w + x] != 255) continue;
+                for (size_t r = 20; r < R; r+=1)
+                {
+                    for (size_t theta = 0; theta < 360; theta+=1)
+                    {
+                        int a = x - (int)std::round(r * std::cos(theta * std::numbers::pi / 180)); // x
+                        int b = y - (int)std::round(r * std::sin(theta * std::numbers::pi / 180)); // y
+                        if (a < 0 || a >= w || b < 0 || b >= h) continue;                        
+                        labels[a][b][r]++;                        
+                    }
+                }
+            }
+        }
+        
+        for (size_t i = 0; i < A; i++)
+        {
+            for (size_t j = 0; j < B; j++)
+            {
+                for (size_t k = 3; k < R; k++)
+                {
+                    if (labels[i][j][k] > 3 * k)
+                    {
+                        ct++;
+                    }
+                    else { continue; }
+                    for (size_t theta = 0; theta < 360; theta++)
+                    {                                        
+                        int x = (int)std::round(k * std::cos(theta * std::numbers::pi / 180)) + i;
+                        int y = (int)std::round(k * std::sin(theta * std::numbers::pi / 180)) + j;
+                        if (x < 0 || x >= w || y < 0 || y >= h) continue;
+                        g[y * w + x] = 255;                    
+                    }
+                }
+            }
+        }
+   
+        return ct;   
     }
 
 }
