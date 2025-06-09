@@ -477,7 +477,7 @@ namespace DIP
                         {
                             threshold= Otsu(f0, w, h, g0, 256);
                         }
-                        Console.WriteLine($"Otsu threshold: {Threshold}");
+                        Console.WriteLine($"Otsu threshold: {threshold}");
                     }
                     NpBitmap = array2bmp(g);
                     break;

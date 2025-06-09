@@ -52,9 +52,9 @@ namespace DIP
             this.Salt_And_PepperToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.霍夫轉換ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.HoughTransformLineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.HoughTransformCircleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.oFileDlg = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.HoughTransformCircleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -199,7 +199,7 @@ namespace DIP
             // 
             this.OtsuToolStripMenuItem.Name = "OtsuToolStripMenuItem";
             this.OtsuToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.OtsuToolStripMenuItem.Text = "二值化";
+            this.OtsuToolStripMenuItem.Text = "Otsu二值化";
             this.OtsuToolStripMenuItem.Click += new System.EventHandler(this.OtsuToolStripMenuItem_Click);
             // 
             // ConComToolStripMenuItem
@@ -235,20 +235,20 @@ namespace DIP
             // HoughTransformLineToolStripMenuItem
             // 
             this.HoughTransformLineToolStripMenuItem.Name = "HoughTransformLineToolStripMenuItem";
-            this.HoughTransformLineToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.HoughTransformLineToolStripMenuItem.Size = new System.Drawing.Size(86, 22);
             this.HoughTransformLineToolStripMenuItem.Text = "線";
             this.HoughTransformLineToolStripMenuItem.Click += new System.EventHandler(this.HoughTransformLineToolStripMenuItem_Click);
-            // 
-            // oFileDlg
-            // 
-            this.oFileDlg.FileName = "openFileDialog1";
             // 
             // HoughTransformCircleToolStripMenuItem
             // 
             this.HoughTransformCircleToolStripMenuItem.Name = "HoughTransformCircleToolStripMenuItem";
-            this.HoughTransformCircleToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.HoughTransformCircleToolStripMenuItem.Size = new System.Drawing.Size(86, 22);
             this.HoughTransformCircleToolStripMenuItem.Text = "圓";
             this.HoughTransformCircleToolStripMenuItem.Click += new System.EventHandler(this.HoughTransformCircleToolStripMenuItem_Click);
+            // 
+            // oFileDlg
+            // 
+            this.oFileDlg.FileName = "openFileDialog1";
             // 
             // DIPSample
             // 
