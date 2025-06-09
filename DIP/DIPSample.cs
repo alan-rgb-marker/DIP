@@ -35,7 +35,7 @@ namespace DIP
         [DllImport("dip_proc.dll", CallingConvention = CallingConvention.Cdecl)]
         unsafe public static extern void Filter(int* f, int w, int h, int* g, double* kernel, double sigma);
         [DllImport("dip_proc.dll", CallingConvention = CallingConvention.Cdecl)]
-        unsafe public static extern void Otsu(int* f, int w, int h, int* g, int histSize);
+        unsafe public static extern int Otsu(int* f, int w, int h, int* g, int histSize);
         [DllImport("dip_proc.dll", CallingConvention = CallingConvention.Cdecl)]
         unsafe public static extern int connected_component(int* f, int w, int h);
         [DllImport("dip_proc.dll", CallingConvention = CallingConvention.Cdecl)]
@@ -459,9 +459,10 @@ namespace DIP
                 }
             }
         }
-
+        int Threshold=-1;
         private void OtsuToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            
             int[] f;
             int[] g;
             foreach (MSForm cF in MdiChildren)
@@ -474,8 +475,9 @@ namespace DIP
                     {
                         fixed (int* f0 = f) fixed (int* g0 = g)
                         {
-                            Otsu(f0, w, h, g0, 256);
+                            Threshold= Otsu(f0, w, h, g0, 256);
                         }
+                        Console.WriteLine($"Otsu threshold: {Threshold}");
                     }
                     NpBitmap = array2bmp(g);
                     break;
@@ -485,6 +487,7 @@ namespace DIP
             childForm.MdiParent = this;
             childForm.pf1 = stStripLabel;
             childForm.pBitmap = NpBitmap;
+            childForm.Text = $"最佳閾值: {Threshold}";
             childForm.Show();
         }
 

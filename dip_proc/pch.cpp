@@ -385,7 +385,7 @@ extern "C" {
         }
 	}
 
-    __declspec(dllexport)void Otsu(int* f, int w, int h, int* g, int histSize) {
+    extern "C" __declspec(dllexport)int Otsu(int* f, int w, int h, int* g, int histSize) {
         int total = w * h;  //像素數
         int* hist = (int*)malloc(sizeof(int) * histSize);  //直方圖
         double* prob = (double*)malloc(sizeof(double) * histSize); //機率
@@ -447,17 +447,20 @@ extern "C" {
         // 計算實際灰階門檻
         int threshold = best_thresh_bin * 256 / histSize;
         if (threshold > 255) threshold = 255;
+        
 
         // 二值化處理
         for (int i = 0; i < total; ++i) {
             int val = f[i];
             g[i] = (val >= threshold) ? 255 : 0;
         }
-
+        
         // 釋放記憶體
         free(hist);
         free(prob);
         free(levels);
+        MessageBoxA(NULL, "Otsu called!", "Debug", MB_OK);
+        return 123; // 返回最佳閥值
     }
     //放大
     __declspec(dllexport) void scale_up_bilinear(int* f, int w, int h, int* g, int new_w, int new_h, double scale_factor) {
