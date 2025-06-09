@@ -459,7 +459,7 @@ extern "C" {
         free(hist);
         free(prob);
         free(levels);
-        MessageBoxA(NULL, "Otsu called!", "Debug", MB_OK);
+        /*MessageBoxA(NULL, "Otsu called!", "Debug", MB_OK);*/
         return threshold; // 返回最佳閥值
 
     }

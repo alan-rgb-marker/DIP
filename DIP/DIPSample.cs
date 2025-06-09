@@ -459,12 +459,12 @@ namespace DIP
                 }
             }
         }
-        int Threshold=-1;
         private void OtsuToolStripMenuItem_Click(object sender, EventArgs e)
         {
             
             int[] f;
             int[] g;
+            int threshold = -1;
             foreach (MSForm cF in MdiChildren)
             {
                 if (cF.Focused)
@@ -475,7 +475,7 @@ namespace DIP
                     {
                         fixed (int* f0 = f) fixed (int* g0 = g)
                         {
-                            Threshold= Otsu(f0, w, h, g0, 256);
+                            threshold= Otsu(f0, w, h, g0, 256);
                         }
                         Console.WriteLine($"Otsu threshold: {Threshold}");
                     }
@@ -487,7 +487,7 @@ namespace DIP
             childForm.MdiParent = this;
             childForm.pf1 = stStripLabel;
             childForm.pBitmap = NpBitmap;
-            childForm.Text = $"最佳閾值: {Threshold}";
+            childForm.Text = $"最佳閾值: {threshold}";
             childForm.Show();
         }
 
